@@ -6,6 +6,7 @@ stages:
       -p data/external/.
     outs:
     - data/external/kz.csv
+
   brazil:
     cmd: >
       kaggle datasets download olistbr/brazilian-ecommerce
@@ -13,3 +14,20 @@ stages:
       -p data/external/brazilian-ecommerce
     outs:
     - data/external/brazilian-ecommerce
+
+  ecommerce:
+    cmd: >
+      kaggle datasets download -d carrie1/ecommerce-data
+      --unzip
+      -p data/external/ecommerce
+    outs:
+    - data/external/ecommerce
+
+  # TODO does not exist
+  retail_ecommerce:
+    cmd: >
+      kaggle datasets download -d retailrocket/ecommerce-dataset
+      --unzip
+      -p data/external/ecommerce-dataset
+    outs:
+    - data/external/ecommerce-dataset

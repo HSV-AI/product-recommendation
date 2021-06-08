@@ -14,3 +14,17 @@ stages:
       md5: a08f215af3c2085b9e19407925683ed6.dir
       size: 126144332
       nfiles: 9
+  retail_ecommerce:
+    cmd: "kaggle datasets download -d retailrocket/ecommerce-dataset --unzip -p data/external/ecommerce-dataset\n"
+    outs:
+    - path: data/external/ecommerce-dataset
+      md5: 19cdee87944c59fc15c51396fe37cd88.dir
+      size: 987498023
+      nfiles: 4
+  ecommerce:
+    cmd: "kaggle datasets download -d carrie1/ecommerce-data --unzip -p data/external/ecommerce\n"
+    outs:
+    - path: data/external/ecommerce
+      md5: 33fb1e3b72d99164291c38f4d8d073dc.dir
+      size: 45580638
+      nfiles: 1
