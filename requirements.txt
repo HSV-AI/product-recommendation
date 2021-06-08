@@ -1,2 +1,5 @@
 jupyter
 pandas
+kaggle
+dvc
+dvclive
