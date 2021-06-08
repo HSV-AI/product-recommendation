@@ -1,8 +1,15 @@
 stages:
-  data: 
+  electronics: 
     cmd: >
       kaggle datasets download mkechinov/ecommerce-purchase-history-from-electronics-store
       --unzip
       -p data/external/.
     outs:
     - data/external/kz.csv
+  brazil:
+    cmd: >
+      kaggle datasets download olistbr/brazilian-ecommerce
+      --unzip
+      -p data/external/brazilian-ecommerce
+    outs:
+    - data/external/brazilian-ecommerce
