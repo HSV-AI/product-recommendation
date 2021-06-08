@@ -1,0 +1,8 @@
+stages:
+  data: 
+    cmd: >
+      kaggle datasets download mkechinov/ecommerce-purchase-history-from-electronics-store
+      --unzip
+      -p data/external/.
+    outs:
+    - data/external/kz.csv
