@@ -1,5 +1,6 @@
 jupyter
 pandas
+matplotlib
 kaggle
 dvc
 dvclive
