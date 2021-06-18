@@ -2,5 +2,7 @@ jupyter
 pandas
 matplotlib
 kaggle
+implicit
+nbstripout
 dvc
 dvclive
