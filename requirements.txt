@@ -7,3 +7,4 @@ nbstripout
 dvc
 dvclive
 wandb
+streamlit
