@@ -47,4 +47,7 @@ stages:
     - data/external/ecommerce/data.csv
     outs:
     - data/interim/item_lookup.gz  
+    - data/interim/item_lookup.csv  
     - data/interim/selected_invoices.gz  
+    - data/interim/selected_invoices.csv  
+
