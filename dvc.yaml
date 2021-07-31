@@ -38,3 +38,13 @@ stages:
     - data/external/brazilian-ecommerce
     - data/external/ecommerce
     - data/external/ecommerce-dataset
+
+  ecommerce_implicit_eda:
+    cmd: >
+      cd notebooks && jupyter nbconvert --to notebook --inplace --execute ECommerce-Implicit-EDA.ipynb
+    deps:
+    - notebooks/ECommerce-Implicit-EDA.ipynb
+    - data/external/ecommerce/data.csv
+    outs:
+    - data/interim/item_lookup.gz  
+    - data/interim/selected_invoices.gz  

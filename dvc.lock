@@ -48,3 +48,19 @@ stages:
       md5: feb282f55dc5fb63e386071091f83047.dir
       size: 298649047
       nfiles: 1
+  ecommerce_implicit_eda:
+    cmd: "cd notebooks && jupyter nbconvert --to notebook --inplace --execute ECommerce-Implicit-EDA.ipynb\n"
+    deps:
+    - path: data/external/ecommerce/data.csv
+      md5: 0b010f31b58364489e68e4b54d106598
+      size: 45580638
+    - path: notebooks/ECommerce-Implicit-EDA.ipynb
+      md5: 1ba7d663387070929d17ac5052f81974
+      size: 80868
+    outs:
+    - path: data/interim/item_lookup.gz
+      md5: 12e6230d1e192cec1f812e6d0b51b44b
+      size: 52463
+    - path: data/interim/selected_invoices.gz
+      md5: 78d149afb4b65ae17851489e9a6064cd
+      size: 361053
