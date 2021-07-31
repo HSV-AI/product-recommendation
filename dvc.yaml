@@ -31,6 +31,15 @@ stages:
       -p data/external/ecommerce-dataset
     outs:
     - data/external/ecommerce-dataset
+
+  vipin20:
+    cmd: >
+      kaggle datasets download -d vipin20/transaction-data
+      --unzip
+      -p data/external/vipin20
+    outs:
+    - data/external/vipin20
+
   data:
     cmd: echo "Pulling all data"
     deps:
@@ -38,3 +47,4 @@ stages:
     - data/external/brazilian-ecommerce
     - data/external/ecommerce
     - data/external/ecommerce-dataset
+    - data/external/vipin20

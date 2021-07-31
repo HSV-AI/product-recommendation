@@ -48,3 +48,14 @@ stages:
       md5: feb282f55dc5fb63e386071091f83047.dir
       size: 298649047
       nfiles: 1
+    - path: data/external/vipin20
+      md5: f6734c217db2ee68db9aabcb791ea957.dir
+      size: 125250157
+      nfiles: 1
+  vipin20:
+    cmd: "kaggle datasets download -d vipin20/transaction-data --unzip -p data/external/vipin20\n"
+    outs:
+    - path: data/external/vipin20
+      md5: f6734c217db2ee68db9aabcb791ea957.dir
+      size: 125250157
+      nfiles: 1
