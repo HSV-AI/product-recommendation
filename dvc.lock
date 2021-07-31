@@ -2,11 +2,12 @@ schema: '2.0'
 stages:
   electronics:
     cmd: "kaggle datasets download mkechinov/ecommerce-purchase-history-from-electronics-store\
-      \ --unzip -p data/external/.\n"
+      \ --unzip -p data/external/ecommerce-purchase-history-from-electronics-store/.\n"
     outs:
-    - path: data/external/kz.csv
-      md5: 06812e4b03d5bd2a46651a720ed09a18
+    - path: data/external/ecommerce-purchase-history-from-electronics-store
+      md5: feb282f55dc5fb63e386071091f83047.dir
       size: 298649047
+      nfiles: 1
   brazil:
     cmd: "kaggle datasets download olistbr/brazilian-ecommerce --unzip -p data/external/brazilian-ecommerce\n"
     outs:
