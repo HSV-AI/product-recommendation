@@ -2,17 +2,36 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import implicit
+import dvc.api
 
 st.image("https://github.com/HSV-AI/hugo-website/blob/master/static/images/logo_v9.png?raw=true")
 
-selected_df = pd.read_pickle('data/interim/selected_invoices.gz')
-item_lookup = pd.read_pickle('data/interim/item_lookup.gz')
+with dvc.api.open(
+    'data/interim/selected_invoices.gz',
+    #rev='branch_name'
+    repo='https://github.com/hsv-ai/product-recommendation') as f:
+    selected_df = pd.read_pickle(f)
+
+with dvc.api.open(
+    'data/interim/item_lookup.gz',
+    repo='https://github.com/hsv-ai/product-recommendation') as f:
+    item_lookup = pd.read_pickle(f)
 
 # Load the Implicit model factors
-item_factors = np.load('data/interim/item_factors.npy')
-user_factors = np.load('data/interim/user_factors.npy')
+with dvc.api.open(
+    'data/interim/item_factors.npy',
+    repo='https://github.com/hsv-ai/product-recommendation') as f:
+    item_factors = np.load(f)
 
-product_train = np.load('data/interim/product_train.npy', allow_pickle=True)
+with dvc.api.open(
+    'data/interim/user_factors.npy',
+    repo='https://github.com/hsv-ai/product-recommendation') as f:
+    user_factors = np.load(f)
+
+with dvc.api.open(
+    'data/interim/product_train.npy',
+    repo='https://github.com/hsv-ai/product-recommendation') as f:
+    product_train = np.load(f, allow_pickle=True)
 
 alpha = 29
 factors = 64
