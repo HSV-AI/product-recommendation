@@ -51,3 +51,14 @@ stages:
     - data/interim/selected_invoices.gz  
     - data/interim/selected_invoices.csv  
 
+  ecommerce_implicit_recommendation:
+    cmd: >
+      cd notebooks && jupyter nbconvert --to notebook --inplace --execute ECommerce-Implicit-Recommendation.ipynb
+    deps:
+    - notebooks/ECommerce-Implicit-Recommendation.ipynb
+    - data/interim/selected_invoices.gz
+    outs:
+    - data/interim/user_factors.npy  
+    - data/interim/item_factors.npy
+    - data/interim/product_train.npy
+    
