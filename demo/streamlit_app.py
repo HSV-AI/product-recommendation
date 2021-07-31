@@ -3,12 +3,14 @@ import pandas as pd
 import numpy as np
 import implicit
 import dvc.api
+import os
+branch = os.environ.get('BRANCH', 'dev')
 
 st.image("https://github.com/HSV-AI/hugo-website/blob/master/static/images/logo_v9.png?raw=true")
 
 with dvc.api.open(
         'data/interim/selected_invoices.csv',
-        rev='dev',
+        rev=branch,
         repo='https://github.com/hsv-ai/product-recommendation',
         mode='r',
     ) as f:
@@ -17,28 +19,28 @@ with dvc.api.open(
 
 with dvc.api.open(
         'data/interim/item_lookup.csv',
-        rev='dev',
+        rev=branch,
         repo='https://github.com/hsv-ai/product-recommendation') as f:
     item_lookup = pd.read_csv(f)
 
 # Load the Implicit model factors
 with dvc.api.open(
         'data/interim/item_factors.npy',
-        rev='dev',
+        rev=branch,
         mode='rb',
         repo='https://github.com/hsv-ai/product-recommendation') as f:
     item_factors = np.load(f)
 
 with dvc.api.open(
         'data/interim/user_factors.npy',
-        rev='dev',
+        rev=branch,
         mode='rb',
         repo='https://github.com/hsv-ai/product-recommendation') as f:
     user_factors = np.load(f)
 
 with dvc.api.open(
         'data/interim/product_train.npy',
-        rev='dev',
+        rev=branch,
         mode='rb',
         repo='https://github.com/hsv-ai/product-recommendation') as f:
     product_train = np.load(f, allow_pickle=True)
