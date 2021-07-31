@@ -14,9 +14,9 @@ services:
       - 8501
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.pokegen_demo.rule=Host(`${DOMAIN_URL}`)"
-      - "traefik.http.routers.pokegen_demo.entrypoints=websecure"
-      - "traefik.http.routers.pokegen_demo.tls.certresolver=myresolver"
+      - "traefik.http.routers.product_recommendation.rule=Host(`${DOMAIN_URL}`)"
+      - "traefik.http.routers.product_recommendation.entrypoints=websecure"
+      - "traefik.http.routers.product_recommendation.tls.certresolver=myresolver"
 
 networks:
     traefik_proxy:
