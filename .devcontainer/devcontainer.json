@@ -1,5 +1,5 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
-// https://github.com/microsoft/vscode-dev-containers/tree/v0.177.0/containers/python-3
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.187.0/containers/python-3
 {
 	"name": "Python 3",
 	"build": {
@@ -7,21 +7,17 @@
 		"context": "..",
 		"args": { 
 			// Update 'VARIANT' to pick a Python version: 3, 3.6, 3.7, 3.8, 3.9
-			"VARIANT": "3.8",
+			"VARIANT": "3.7",
 			// Options
 			"INSTALL_NODE": "false",
 			"NODE_VERSION": "lts/*"
 		}
 	},
 
-	//"runArgs": [
-	//	"--gpus=all"
-	//],
 	"runArgs": ["--env-file", ".env"],
-	
+
 	// Set *default* container specific settings.json values on container create.
 	"settings": { 
-		"terminal.integrated.shell.linux": "/bin/bash",
 		"python.pythonPath": "/usr/local/bin/python",
 		"python.languageServer": "Pylance",
 		"python.linting.enabled": true,
@@ -47,8 +43,9 @@
 	// "forwardPorts": [],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "pip3 install -r requirements.txt ; dvc pull data || dvc repro data"
+	// "postCreateCommand": "pip3 install --user -r requirements.txt",
+	"postCreateCommand": "dvc pull data || dvc repro data"
 
 	// Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
-	// "remoteUser": "vscode"
+	"remoteUser": "vscode"
 }
