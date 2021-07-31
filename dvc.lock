@@ -55,12 +55,18 @@ stages:
       md5: 0b010f31b58364489e68e4b54d106598
       size: 45580638
     - path: notebooks/ECommerce-Implicit-EDA.ipynb
-      md5: 1ba7d663387070929d17ac5052f81974
-      size: 80868
+      md5: 966f0c78524175cd3ea1d9ad7b62916a
+      size: 81033
     outs:
+    - path: data/interim/item_lookup.csv
+      md5: ba75d28f67bc5eb3cbd6f47438fcef4c
+      size: 143619
     - path: data/interim/item_lookup.gz
-      md5: 12e6230d1e192cec1f812e6d0b51b44b
+      md5: ae690ac7cfc623267acdba4c7eab8b20
       size: 52463
+    - path: data/interim/selected_invoices.csv
+      md5: 86f58de254ac358d7977c6ac5e708050
+      size: 1601129
     - path: data/interim/selected_invoices.gz
-      md5: 78d149afb4b65ae17851489e9a6064cd
+      md5: aa994cc59c46665190fda0aa257c358c
       size: 361053
