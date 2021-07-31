@@ -1,0 +1,24 @@
+version: "3.9"  # optional since v1.27.0
+services:
+  pokegen:
+    environment: 
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - API_URL=${API_URL}
+      - API_USERNAME=${API_USERNAME}
+      - API_PASSWORD=${API_PASSWORD}
+    build: .
+    networks:
+      - traefik_proxy
+    expose:
+      - 8501
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.pokegen_demo.rule=Host(`${DOMAIN_URL}`)"
+      - "traefik.http.routers.pokegen_demo.entrypoints=websecure"
+      - "traefik.http.routers.pokegen_demo.tls.certresolver=myresolver"
+
+networks:
+    traefik_proxy:
+        external:
+            name: "traefik_proxy"
