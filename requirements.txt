@@ -6,7 +6,7 @@ jupyter==1.00
 jupyterlab==2.3.1
 scikit-learn==0.24.2
 dvc==2.5.4
-dvclive=0.0.8
+dvclive==0.0.8
 streamlit==0.85.1
 wandb==0.11.1
 matplotlib==3.4.1
