@@ -17,22 +17,29 @@ with dvc.api.open(
 
 with dvc.api.open(
         'data/interim/item_lookup.csv',
+        rev='feature/rearranging',
         repo='https://github.com/hsv-ai/product-recommendation') as f:
     item_lookup = pd.read_csv(f)
 
 # Load the Implicit model factors
 with dvc.api.open(
         'data/interim/item_factors.npy',
+        rev='feature/rearranging',
+        mode='rb',
         repo='https://github.com/hsv-ai/product-recommendation') as f:
     item_factors = np.load(f)
 
 with dvc.api.open(
         'data/interim/user_factors.npy',
+        rev='feature/rearranging',
+        mode='rb',
         repo='https://github.com/hsv-ai/product-recommendation') as f:
     user_factors = np.load(f)
 
 with dvc.api.open(
         'data/interim/product_train.npy',
+        rev='feature/rearranging',
+        mode='rb',
         repo='https://github.com/hsv-ai/product-recommendation') as f:
     product_train = np.load(f, allow_pickle=True)
 
