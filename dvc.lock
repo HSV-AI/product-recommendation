@@ -48,3 +48,44 @@ stages:
       md5: feb282f55dc5fb63e386071091f83047.dir
       size: 298649047
       nfiles: 1
+  ecommerce_implicit_eda:
+    cmd: "cd notebooks && jupyter nbconvert --to notebook --inplace --execute ECommerce-Implicit-EDA.ipynb\n"
+    deps:
+    - path: data/external/ecommerce/data.csv
+      md5: 0b010f31b58364489e68e4b54d106598
+      size: 45580638
+    - path: notebooks/ECommerce-Implicit-EDA.ipynb
+      md5: 4c46bdf23c19783cdbdfe1e5f8937fe9
+      size: 81033
+    outs:
+    - path: data/interim/item_lookup.csv
+      md5: ba75d28f67bc5eb3cbd6f47438fcef4c
+      size: 143619
+    - path: data/interim/item_lookup.gz
+      md5: a787dbb36a216ceecb90e13652cfe78d
+      size: 52463
+    - path: data/interim/selected_invoices.csv
+      md5: 86f58de254ac358d7977c6ac5e708050
+      size: 1601129
+    - path: data/interim/selected_invoices.gz
+      md5: 2013cd00c1a77b2c180fae9db1d5aaf8
+      size: 361053
+  ecommerce_implicit_recommendation:
+    cmd: "cd notebooks && jupyter nbconvert --to notebook --inplace --execute ECommerce-Implicit-Recommendation.ipynb\n"
+    deps:
+    - path: data/interim/selected_invoices.gz
+      md5: 2013cd00c1a77b2c180fae9db1d5aaf8
+      size: 361053
+    - path: notebooks/ECommerce-Implicit-Recommendation.ipynb
+      md5: 1aeda1517cac4d886196c952f37b9536
+      size: 52508
+    outs:
+    - path: data/interim/item_factors.npy
+      md5: 1dba50e65a3e5c9ee997fc70d56cf56d
+      size: 867456
+    - path: data/interim/product_train.npy
+      md5: e917587c508d43bc6845282b4ed52f36
+      size: 784691
+    - path: data/interim/user_factors.npy
+      md5: 37b11097ca77282d274c1292607e960a
+      size: 1474944
