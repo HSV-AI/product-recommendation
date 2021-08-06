@@ -47,4 +47,26 @@ stages:
     - data/external/brazilian-ecommerce
     - data/external/ecommerce
     - data/external/ecommerce-dataset
-    - data/external/vipin20
+
+  ecommerce_implicit_eda:
+    cmd: >
+      cd notebooks && jupyter nbconvert --to notebook --inplace --execute ECommerce-Implicit-EDA.ipynb
+    deps:
+    - notebooks/ECommerce-Implicit-EDA.ipynb
+    - data/external/ecommerce/data.csv
+    outs:
+    - data/interim/item_lookup.gz  
+    - data/interim/item_lookup.csv  
+    - data/interim/selected_invoices.gz  
+    - data/interim/selected_invoices.csv  
+
+  ecommerce_implicit_recommendation:
+    cmd: >
+      cd notebooks && jupyter nbconvert --to notebook --inplace --execute ECommerce-Implicit-Recommendation.ipynb
+    deps:
+    - notebooks/ECommerce-Implicit-Recommendation.ipynb
+    - data/interim/selected_invoices.gz
+    outs:
+    - data/interim/user_factors.npy  
+    - data/interim/item_factors.npy
+    - data/interim/product_train.npy

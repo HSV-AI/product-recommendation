@@ -131,3 +131,6 @@ dmypy.json
 
 # Kaggle stuff
 kaggle/
+
+# WANDB Stuff
+**/wandb
