@@ -23,7 +23,6 @@ stages:
     outs:
     - data/external/ecommerce
 
-  # TODO does not exist
   retail_ecommerce:
     cmd: >
       kaggle datasets download -d retailrocket/ecommerce-dataset
@@ -47,6 +46,7 @@ stages:
     - data/external/brazilian-ecommerce
     - data/external/ecommerce
     - data/external/ecommerce-dataset
+    - data/external/vipin20
 
   ecommerce_implicit_eda:
     cmd: >
