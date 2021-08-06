@@ -55,20 +55,20 @@ stages:
       md5: 0b010f31b58364489e68e4b54d106598
       size: 45580638
     - path: notebooks/ECommerce-Implicit-EDA.ipynb
-      md5: 4c46bdf23c19783cdbdfe1e5f8937fe9
+      md5: 3f511df721f9025135a7da9fb1811a2a
       size: 81033
     outs:
     - path: data/interim/item_lookup.csv
       md5: ba75d28f67bc5eb3cbd6f47438fcef4c
       size: 143619
     - path: data/interim/item_lookup.gz
-      md5: a787dbb36a216ceecb90e13652cfe78d
+      md5: 439d6cef78341191b591baee3ec1f5d2
       size: 52463
     - path: data/interim/selected_invoices.csv
       md5: 86f58de254ac358d7977c6ac5e708050
       size: 1601129
     - path: data/interim/selected_invoices.gz
-      md5: 2013cd00c1a77b2c180fae9db1d5aaf8
+      md5: b20318ad43089e896a3c7122769cf33b
       size: 361053
   ecommerce_implicit_recommendation:
     cmd: "cd notebooks && jupyter nbconvert --to notebook --inplace --execute ECommerce-Implicit-Recommendation.ipynb\n"
@@ -89,3 +89,10 @@ stages:
     - path: data/interim/user_factors.npy
       md5: 37b11097ca77282d274c1292607e960a
       size: 1474944
+  vipin20:
+    cmd: "kaggle datasets download -d vipin20/transaction-data --unzip -p data/external/vipin20\n"
+    outs:
+    - path: data/external/vipin20
+      md5: f6734c217db2ee68db9aabcb791ea957.dir
+      size: 125250157
+      nfiles: 1
