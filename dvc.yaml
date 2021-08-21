@@ -3,17 +3,17 @@ stages:
     cmd: >
       kaggle datasets download mkechinov/ecommerce-purchase-history-from-electronics-store
       --unzip
-      -p data/external/ecommerce-purchase-history-from-electronics-store/.
+      -p data/external/electronics
     outs:
-    - data/external/ecommerce-purchase-history-from-electronics-store
+    - data/external/electronics
 
   brazil:
     cmd: >
       kaggle datasets download olistbr/brazilian-ecommerce
       --unzip
-      -p data/external/brazilian-ecommerce
+      -p data/external/brazilian
     outs:
-    - data/external/brazilian-ecommerce
+    - data/external/brazilian
 
   ecommerce:
     cmd: >
@@ -27,9 +27,9 @@ stages:
     cmd: >
       kaggle datasets download -d retailrocket/ecommerce-dataset
       --unzip
-      -p data/external/ecommerce-dataset
+      -p data/external/retailrocket
     outs:
-    - data/external/ecommerce-dataset
+    - data/external/retailrocket
 
   vipin20:
     cmd: >
@@ -42,10 +42,10 @@ stages:
   data:
     cmd: echo "Pulling all data"
     deps:
-    - data/external/ecommerce-purchase-history-from-electronics-store
-    - data/external/brazilian-ecommerce
+    - data/external/electronics
+    - data/external/brazilian
     - data/external/ecommerce
-    - data/external/ecommerce-dataset
+    - data/external/retailrocket
     - data/external/vipin20
 
   ecommerce_implicit_eda:
@@ -55,18 +55,38 @@ stages:
     - notebooks/ECommerce-Implicit-EDA.ipynb
     - data/external/ecommerce/data.csv
     outs:
-    - data/interim/item_lookup.gz  
-    - data/interim/item_lookup.csv  
-    - data/interim/selected_invoices.gz  
-    - data/interim/selected_invoices.csv  
+    - data/interim/ecommerce/item_lookup.gz  
+    - data/interim/ecommerce/item_lookup.csv  
+    - data/interim/ecommerce/selected_invoices.gz  
+    - data/interim/ecommerce/selected_invoices.csv  
 
   ecommerce_implicit_recommendation:
     cmd: >
       cd notebooks && jupyter nbconvert --to notebook --inplace --execute ECommerce-Implicit-Recommendation.ipynb
     deps:
     - notebooks/ECommerce-Implicit-Recommendation.ipynb
-    - data/interim/selected_invoices.gz
+    - data/interim/ecommerce/selected_invoices.gz
     outs:
-    - data/interim/user_factors.npy  
-    - data/interim/item_factors.npy
-    - data/interim/product_train.npy
+    - data/interim/ecommerce/user_factors.npy  
+    - data/interim/ecommerce/item_factors.npy
+    - data/interim/ecommerce/product_train.npy
+
+  vipin20_implicit_eda:
+    cmd: >
+      cd notebooks && jupyter nbconvert --to notebook --inplace --execute vipin20-Transaction-Data-EDA.ipynb
+    deps:
+    - notebooks/vipin20-Transaction-Data-EDA.ipynb
+    - data/external/vipin20/transaction_data.csv
+    outs:
+    - data/interim/vipin20/transactions.gz  
+
+  vipin20_implicit_recommendation:
+    cmd: >
+      cd notebooks && jupyter nbconvert --to notebook --inplace --execute vipin20-Implicit-Recommendation.ipynb
+    deps:
+    - notebooks/vipin20-Implicit-Recommendation.ipynb
+    - data/interim/vipin20/transactions.gz
+    outs:
+    - data/interim/vipin20/user_factors.npy  
+    - data/interim/vipin20/item_factors.npy
+    - data/interim/vipin20/product_train.npy
