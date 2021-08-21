@@ -7,7 +7,7 @@ jupyterlab==2.3.1
 scikit-learn==0.24.2
 dvclive==0.0.8
 streamlit==0.85.1
-wandb==0.11.1
+wandb==0.12.0
 matplotlib==3.4.1
 kaggle==1.5.12
 implicit==0.4.4
