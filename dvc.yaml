@@ -1,4 +1,20 @@
 stages:
+  jewewlry: 
+    cmd: >
+      kaggle datasets download mkechinov/ecommerce-purchase-history-from-jewelry-store
+      --unzip
+      -p data/external/jewelry
+    outs:
+    - data/external/jewelry
+
+  journey: 
+    cmd: >
+      kaggle datasets download frtgnn/dunnhumby-the-complete-journey
+      --unzip
+      -p data/external/journey
+    outs:
+    - data/external/journey
+
   electronics: 
     cmd: >
       kaggle datasets download mkechinov/ecommerce-purchase-history-from-electronics-store
@@ -47,6 +63,8 @@ stages:
     - data/external/ecommerce
     - data/external/retailrocket
     - data/external/vipin20
+    - data/external/jewelry
+    - data/external/journey
 
   ecommerce_implicit_eda:
     cmd: >
