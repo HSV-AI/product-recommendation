@@ -14,8 +14,7 @@
 		}
 	},
 
-//	"runArgs": ["--env-file", ".env", "--gpus=all"],
-	"runArgs": ["--env-file", ".env"],
+    //	"runArgs": ["--gpus=all"],
 
 	// Set *default* container specific settings.json values on container create.
 	"settings": { 
@@ -46,7 +45,9 @@
 
 	// Use 'postCreateCommand' to run commands after the container is created.
 	// "postCreateCommand": "pip3 install --user -r requirements.txt",
-	"postCreateCommand": "dvc pull data || dvc repro data",
+
+	// This will not work if we don't have the keys in the environment before we get here
+	// "postCreateCommand": "dvc pull data || dvc repro data",
 
 	// Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
 	"remoteUser": "vscode"
