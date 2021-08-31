@@ -108,3 +108,12 @@ stages:
     - data/interim/vipin20/user_factors.npy  
     - data/interim/vipin20/item_factors.npy
     - data/interim/vipin20/product_train.npy
+
+  jewelry_implicit_eda:
+    cmd: >
+      cd notebooks && jupyter nbconvert --to notebook --inplace --execute jewelry-EDA.ipynb
+    deps:
+    - notebooks/jewelry-EDA.ipynb
+    - data/external/jewelry
+    outs:
+    - data/interim/jewelry/transactions.gz

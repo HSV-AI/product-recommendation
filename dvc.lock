@@ -156,3 +156,17 @@ stages:
       md5: 4b4e52dd236f59e0df5c6731b5bf2ba2.dir
       size: 847048344
       nfiles: 8
+  jewelry_implicit_eda:
+    cmd: "cd notebooks && jupyter nbconvert --to notebook --inplace --execute jewelry-EDA.ipynb\n"
+    deps:
+    - path: data/external/jewelry
+      md5: dd8945fd9d319147f89e3e6992068ebd.dir
+      size: 16403569
+      nfiles: 1
+    - path: notebooks/jewelry-EDA.ipynb
+      md5: a73f795408c5745e1ebd32d9ab314da1
+      size: 526281
+    outs:
+    - path: data/interim/jewelry/transactions.gz
+      md5: fb46819e1832110d92d90357975d9c60
+      size: 2533388
