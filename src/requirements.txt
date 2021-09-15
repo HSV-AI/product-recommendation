@@ -52,6 +52,8 @@ cookiecutter==1.7.3
     # via kedro
 coverage==5.5
     # via pytest-cov
+cycler==0.10.0
+    # via matplotlib
 debugpy==1.4.3
     # via ipykernel
 decorator==5.1.0
@@ -76,6 +78,8 @@ idna==2.10
     # via
     #   anyio
     #   requests
+implicit==0.4.8
+    # via -r /workspaces/product-recommendation/src/requirements.in
 importlib-metadata==4.8.1
     # via
     #   argcomplete
@@ -127,6 +131,8 @@ jinja2==3.0.1
     #   notebook
 jmespath==0.10.0
     # via kedro
+joblib==1.0.1
+    # via scikit-learn
 json5==0.9.6
     # via jupyterlab-server
 jsonschema==3.2.0
@@ -169,14 +175,18 @@ jupyterlab-widgets==1.0.2
     # via ipywidgets
 jupyterlab==3.1.12
     # via -r /workspaces/product-recommendation/src/requirements.in
-kedro==0.17.5
+kedro[pandas.csvdataset]==0.17.5
     # via -r /workspaces/product-recommendation/src/requirements.in
+kiwisolver==1.3.2
+    # via matplotlib
 markupsafe==2.0.1
     # via jinja2
 matplotlib-inline==0.1.3
     # via
     #   ipykernel
     #   ipython
+matplotlib==3.4.3
+    # via -r /workspaces/product-recommendation/src/requirements.in
 mccabe==0.6.1
     # via flake8
 mistune==0.8.4
@@ -210,7 +220,12 @@ notebook==6.4.3
     #   nbclassic
     #   widgetsnbextension
 numpy==1.21.2
-    # via pandas
+    # via
+    #   implicit
+    #   matplotlib
+    #   pandas
+    #   scikit-learn
+    #   scipy
 packaging==21.0
     # via
     #   bleach
@@ -229,6 +244,8 @@ pexpect==4.8.0
     # via ipython
 pickleshare==0.7.5
     # via ipython
+pillow==8.3.2
+    # via matplotlib
 pip-tools==5.5.0
     # via kedro
 pluggy==0.13.1
@@ -265,7 +282,9 @@ pygments==2.10.0
     #   nbconvert
     #   qtconsole
 pyparsing==2.4.7
-    # via packaging
+    # via
+    #   matplotlib
+    #   packaging
 pyrsistent==0.18.0
     # via jsonschema
 pytest-cov==2.12.1
@@ -281,6 +300,7 @@ python-dateutil==2.8.2
     # via
     #   arrow
     #   jupyter-client
+    #   matplotlib
     #   pandas
 python-json-logger==2.0.2
     # via kedro
@@ -313,6 +333,12 @@ requests==2.25.1
     #   requests-unixsocket
 rope==0.19.0
     # via kedro
+scikit-learn==0.24.2
+    # via -r /workspaces/product-recommendation/src/requirements.in
+scipy==1.7.1
+    # via
+    #   implicit
+    #   scikit-learn
 send2trash==1.8.0
     # via
     #   jupyter-server
@@ -321,6 +347,7 @@ six==1.16.0
     # via
     #   bleach
     #   cookiecutter
+    #   cycler
     #   jsonschema
     #   python-dateutil
 smmap==4.0.0
@@ -335,6 +362,8 @@ testpath==0.5.0
     # via nbconvert
 text-unidecode==1.3
     # via python-slugify
+threadpoolctl==2.2.0
+    # via scikit-learn
 toml==0.10.2
     # via
     #   black
@@ -351,6 +380,8 @@ tornado==6.1
     #   jupyterlab
     #   notebook
     #   terminado
+tqdm==4.62.2
+    # via implicit
 traitlets==5.1.0
     # via
     #   ipykernel

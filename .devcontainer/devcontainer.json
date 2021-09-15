@@ -44,7 +44,7 @@
 	// "forwardPorts": [],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "kedro build-reqs && pip3 install -r src/requirements.txt",
+	"postCreateCommand": "pip3 install -r src/requirements.txt",
 
 	// This will not work if we don't have the keys in the environment before we get here
 	// "postCreateCommand": "dvc pull data || dvc repro data",
