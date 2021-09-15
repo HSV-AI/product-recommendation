@@ -169,7 +169,7 @@ jupyterlab-widgets==1.0.2
     # via ipywidgets
 jupyterlab==3.1.12
     # via -r /workspaces/product-recommendation/src/requirements.in
-kedro[pandas.csvdataset]==0.17.5
+kedro==0.17.5
     # via -r /workspaces/product-recommendation/src/requirements.in
 markupsafe==2.0.1
     # via jinja2

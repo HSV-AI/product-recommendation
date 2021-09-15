@@ -1,8 +1,1 @@
-numpy
-pandas
-scikit-learn
-streamlit
-wandb
-matplotlib
-kaggle
-implicit
+kedro==0.17.5
