@@ -42,6 +42,9 @@
 # This is a data set used by the "Hello World" example pipeline provided with the project
 # template. Please feel free to remove it once you remove the example pipeline.
 
+####
+# Vipin20 Dataset
+###
 vipin20_kaggle_data:
   type: pandas.CSVDataSet
   filepath: s3://hsv-ai/product-recommendation/data/01_raw/vipin20/transaction_data.csv
@@ -66,3 +69,61 @@ vipin20_item_factors:
 vipin20_product_train:
   type: pickle.PickleDataSet
   filepath: data/06_models/vipin20/product_train.pkl
+
+###
+# ecommerce dataset
+###
+ecommerce_kaggle_data:
+  type: pandas.CSVDataSet
+  filepath: s3://hsv-ai/product-recommendation/data/01_raw/ecommerce/data.csv
+  credentials: aws
+  load_args:
+    encoding: 'iso-8859-1'
+
+ecommerce_transactions:
+  type: pandas.CSVDataSet
+  filepath: data/05_model_input/ecommerce/transactions.csv
+
+ecommerce_products:
+  type: pandas.CSVDataSet
+  filepath: data/05_model_input/ecommerce/products.csv
+
+ecommerce_user_factors:
+  type: pickle.PickleDataSet
+  filepath: data/06_models/ecommerce/user_factors.pkl
+
+ecommerce_item_factors:
+  type: pickle.PickleDataSet
+  filepath: data/06_models/ecommerce/item_factors.pkl
+
+ecommerce_product_train:
+  type: pickle.PickleDataSet
+  filepath: data/06_models/ecommerce/product_train.pkl
+
+###
+# jewelry dataset
+###
+jewelry_kaggle_data:
+  type: pandas.CSVDataSet
+  filepath: s3://hsv-ai/product-recommendation/data/01_raw/jewelry/jewelry.csv
+  credentials: aws
+
+jewelry_transactions:
+  type: pandas.CSVDataSet
+  filepath: data/05_model_input/jewelry/transactions.csv
+
+jewelry_products:
+  type: pandas.CSVDataSet
+  filepath: data/05_model_input/jewelry/products.csv
+
+jewelry_user_factors:
+  type: pickle.PickleDataSet
+  filepath: data/06_models/jewelry/user_factors.pkl
+
+jewelry_item_factors:
+  type: pickle.PickleDataSet
+  filepath: data/06_models/jewelry/item_factors.pkl
+
+jewelry_product_train:
+  type: pickle.PickleDataSet
+  filepath: data/06_models/jewelry/product_train.pkl
