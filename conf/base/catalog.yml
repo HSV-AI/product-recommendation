@@ -44,8 +44,8 @@
 
 vipin20_kaggle_data:
   type: pandas.CSVDataSet
-  filepath: s3://hsv-ai/kedro/recommendation/data/01_raw/vipin20/transaction_data.csv
-  credentials: minio
+  filepath: s3://hsv-ai/product-recommendation/data/01_raw/vipin20/transaction_data.csv
+  credentials: aws
 
 vipin20_transactions:
   type: pandas.CSVDataSet
