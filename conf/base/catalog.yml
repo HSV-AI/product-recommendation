@@ -127,3 +127,94 @@ jewelry_item_factors:
 jewelry_product_train:
   type: pickle.PickleDataSet
   filepath: data/06_models/jewelry/product_train.pkl
+
+###
+# ecommerce dataset
+###
+ecommerce_kaggle_data:
+  type: pandas.CSVDataSet
+  filepath: s3://hsv-ai/product-recommendation/data/01_raw/ecommerce/data.csv
+  credentials: aws
+  load_args:
+    encoding: 'iso-8859-1'
+
+ecommerce_transactions:
+  type: pandas.CSVDataSet
+  filepath: data/05_model_input/ecommerce/transactions.csv
+
+ecommerce_products:
+  type: pandas.CSVDataSet
+  filepath: data/05_model_input/ecommerce/products.csv
+
+ecommerce_user_factors:
+  type: pickle.PickleDataSet
+  filepath: data/06_models/ecommerce/user_factors.pkl
+
+ecommerce_item_factors:
+  type: pickle.PickleDataSet
+  filepath: data/06_models/ecommerce/item_factors.pkl
+
+ecommerce_product_train:
+  type: pickle.PickleDataSet
+  filepath: data/06_models/ecommerce/product_train.pkl
+
+###
+# journey dataset
+###
+journey_kaggle_transaction_data:
+  type: pandas.CSVDataSet
+  filepath: s3://hsv-ai/product-recommendation/data/01_raw/journey/transaction_data.csv
+  credentials: aws
+
+journey_kaggle_product_data:
+  type: pandas.CSVDataSet
+  filepath: s3://hsv-ai/product-recommendation/data/01_raw/journey/product.csv
+  credentials: aws
+
+journey_transactions:
+  type: pandas.CSVDataSet
+  filepath: data/05_model_input/journey/transactions.csv
+
+journey_products:
+  type: pandas.CSVDataSet
+  filepath: data/05_model_input/journey/products.csv
+
+journey_user_factors:
+  type: pickle.PickleDataSet
+  filepath: data/06_models/journey/user_factors.pkl
+
+journey_item_factors:
+  type: pickle.PickleDataSet
+  filepath: data/06_models/journey/item_factors.pkl
+
+journey_product_train:
+  type: pickle.PickleDataSet
+  filepath: data/06_models/journey/product_train.pkl
+
+###
+# electronics dataset
+###
+electronics_kaggle_data:
+  type: pandas.CSVDataSet
+  filepath: s3://hsv-ai/product-recommendation/data/01_raw/electronics/kz.csv
+  credentials: aws
+
+electronics_transactions:
+  type: pandas.CSVDataSet
+  filepath: data/05_model_input/electronics/transactions.csv
+
+electronics_products:
+  type: pandas.CSVDataSet
+  filepath: data/05_model_input/electronics/products.csv
+
+electronics_user_factors:
+  type: pickle.PickleDataSet
+  filepath: data/06_models/electronics/user_factors.pkl
+
+electronics_item_factors:
+  type: pickle.PickleDataSet
+  filepath: data/06_models/electronics/item_factors.pkl
+
+electronics_product_train:
+  type: pickle.PickleDataSet
+  filepath: data/06_models/electronics/product_train.pkl

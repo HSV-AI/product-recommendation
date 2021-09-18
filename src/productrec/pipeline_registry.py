@@ -20,7 +20,7 @@ from kedro.pipeline import Pipeline
 
 from productrec.pipelines import data_engineering as de
 from productrec.pipelines import data_science as ds
-
+from productrec.pipelines import cleaning as clean
 
 def register_pipelines() -> Dict[str, Pipeline]:
     """Register the project's pipelines.
@@ -31,9 +31,11 @@ def register_pipelines() -> Dict[str, Pipeline]:
     """
     data_engineering_pipeline = de.create_pipeline()
     data_science_pipeline = ds.create_pipeline()
+    clean_electronics_pipeline = clean.create_pipeline()
 
     return {
         "de": data_engineering_pipeline,
         "ds": data_science_pipeline,
+        "clean_electronics": clean_electronics_pipeline,
         "__default__": data_engineering_pipeline + data_science_pipeline,
     }

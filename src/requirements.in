@@ -6,6 +6,7 @@ jupyter
 jupyter_client
 jupyterlab
 kedro[pandas.CSVDataSet]
+kedro-viz
 # kedro-telemetry~=0.1.0
 nbstripout
 pytest-cov
