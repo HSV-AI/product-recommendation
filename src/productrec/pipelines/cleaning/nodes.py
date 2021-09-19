@@ -91,3 +91,115 @@ def clean_brazillian(transactions: pd.DataFrame, products: pd.DataFrame, custome
         filtered_df[["order_id", "product_id", "price", "quantity"]],
         products[["product_id", "description"]]
     ]
+
+def clean_ecommerce(transactions: pd.DataFrame) -> List[pd.DataFrame]:
+
+    print('Unique invoices', len(pd.unique(transactions['InvoiceNo'])))
+    print('Unique products', len(pd.unique(transactions['StockCode'])))
+    print('Total rows', len(transactions))
+
+    transactions = transactions[(transactions.UnitPrice > 0) & (transactions.Quantity > 0)]
+
+    minimum_order_size = 2
+    order_group = transactions.loc[:, ['InvoiceNo', 'StockCode']].groupby('InvoiceNo').count()
+    
+    multi_order = order_group[(order_group.StockCode >= minimum_order_size)].count()
+    single_order = order_group[(order_group.StockCode < minimum_order_size)].count()
+    
+    print('Orders with at least',minimum_order_size,'products:',multi_order['StockCode'])
+    print('Orders with less than',minimum_order_size,'products:',single_order['StockCode'])
+    
+    # We can capture the list of mutiple product orders with this:
+    order_filter = order_group[(order_group.StockCode >= minimum_order_size)].index.tolist()
+
+    filtered_df = transactions[transactions['InvoiceNo'].isin(order_filter)].copy()
+
+    print('Original dataframe length:', len(transactions))
+    print('Filtered dataframe length:', len(filtered_df))
+
+    filtered_df['StockCode'] = filtered_df['StockCode'].astype(str)
+
+    item_lookup = filtered_df[['StockCode', 'Description']].drop_duplicates() # Only get unique item/description pairs
+    item_lookup['StockCode'] = item_lookup.StockCode.astype(str) # Encode as strings for future lookup ease
+
+    price_lookup = filtered_df[['StockCode', 'UnitPrice']].drop_duplicates()
+    price_lookup['StockCode'] = price_lookup.StockCode.astype(str)
+
+    selected_df = filtered_df[['InvoiceNo', 'StockCode', 'Quantity', 'UnitPrice', 'Description']]
+    selected_df.info()
+
+    renamed_df = selected_df.rename(columns={"InvoiceNo": "order_id", 
+                                "StockCode": "product_id", 
+                                "Description":"description",
+                                "Quantity":"quantity",
+                                "UnitPrice":"price"})
+
+    products_df = item_lookup.rename(columns={"StockCode":"product_id", "Description":"description"})
+
+    return [renamed_df, products_df]
+
+def clean_jewelry(transactions: pd.DataFrame) -> List[pd.DataFrame]:
+
+    print('Total length is',len(transactions))
+    transactions.isna().sum()
+
+    transactions = transactions[(transactions.quantity > 0) & (transactions.price > 0)]
+
+    minimum_purchaces = 2
+    product_group = transactions.loc[:, ['order_id', 'product_id']].groupby('product_id').count()
+    
+    multi_purchase = product_group[(product_group.order_id >= minimum_purchaces)].count()
+    single_purchase = product_group[(product_group.order_id < minimum_purchaces)].count()
+    
+    print('Products with at least',minimum_purchaces,'purchase:',multi_purchase['order_id'])
+    print('Products with less than',minimum_purchaces,'purchase:',single_purchase['order_id'])
+    
+    # We can capture the list of mutiple product orders with this:
+    product_filter = product_group[(product_group.order_id >= minimum_purchaces)].index.tolist()
+
+    filtered_df = transactions[transactions['product_id'].isin(product_filter)].copy()
+
+    print('Original dataframe length:', len(transactions))
+    print('Filtered dataframe length:', len(filtered_df))
+
+    minimum_order_size = 2
+    order_group = filtered_df.loc[:, ['order_id', 'product_id']].groupby('order_id').count()
+    
+    multi_order = order_group[(order_group.product_id >= minimum_order_size)].count()
+    single_order = order_group[(order_group.product_id < minimum_order_size)].count()
+    
+    print('Orders with at least',minimum_order_size,'products:',multi_order['product_id'])
+    print('Orders with less than',minimum_order_size,'products:',single_order['product_id'])
+    
+    # We can capture the list of mutiple product orders with this:
+    order_filter = order_group[(order_group.product_id >= minimum_order_size)].index.tolist()
+
+    filtered_df = filtered_df[filtered_df['order_id'].isin(order_filter)].copy()
+
+    print('Original dataframe length:', len(transactions))
+    print('Filtered dataframe length:', len(filtered_df))
+
+    minimum_purchaces = 2
+    user_group = transactions.loc[:, ['order_id', 'user_id']].groupby('user_id').count()
+    
+    multi_purchase = user_group[(user_group.order_id >= minimum_purchaces)].count()
+    single_purchase = user_group[(user_group.order_id < minimum_purchaces)].count()
+    
+    print('Users with at least',minimum_order_size,'purchase:',multi_purchase['order_id'])
+    print('Users with less than',minimum_order_size,'purchase:',single_purchase['order_id'])
+    
+    # We can capture the list of mutiple product orders with this:
+    user_filter = user_group[(user_group.order_id >= minimum_order_size)].index.tolist()
+
+    filtered_df = filtered_df[filtered_df['user_id'].isin(user_filter)].copy()
+
+    print('Original dataframe length:', len(transactions))
+    print('Filtered dataframe length:', len(filtered_df))
+
+    item_lookup = filtered_df[['product_id', 'category_code']].drop_duplicates() # Only get unique item/description pairs
+    item_lookup['product_id'] = item_lookup.product_id.astype(str) # Encode as strings for future lookup ease
+
+    renamed_df = filtered_df[["order_id", "product_id","quantity", "price"]]
+    products_df = item_lookup.rename(columns={"StockCode":"product_id", "Description":"description"})
+
+    return [renamed_df, products_df]
