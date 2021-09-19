@@ -2,7 +2,7 @@ from kedro.pipeline import Pipeline, node
 
 from productrec.pipelines.scoring.nodes import score_auc
 
-from .cleaning import clean_brazillian, clean_electronics, clean_ecommerce, clean_jewelry
+from .cleaning import clean_brazillian, clean_electronics, clean_ecommerce, clean_jewelry, clean_journey
 from .splitting import split_data
 from .training import train_implicit
 from productrec.pipelines import splitting
@@ -127,6 +127,37 @@ def create_jewelry_pipeline(**kwargs):
                     "jewelry_user_factors", "jewelry_item_factors", "jewelry_hyperparameters"],
                 "jewelry_score",
                 name="score_jewelry"
+            )
+        ]
+    )
+
+def create_journey_pipeline(**kwargs):
+    return Pipeline(
+        [
+            node(
+                clean_journey,
+                ["journey_kaggle_transaction_data", "journey_kaggle_product_data"],
+                ["journey_transactions", "journey_products"],
+                name="clean_journey"
+            ),
+            node(
+                split_data,
+                "journey_transactions",
+                ["journey_train", "journey_test", "journey_products_altered", "journey_transactions_altered"],
+                name="split_journey_data"
+            ),
+            node(
+                train_implicit,
+                ["journey_train", "journey_hyperparameters"],
+                ["journey_user_factors", "journey_item_factors", "journey_product_train"],
+                name="train_implicit_journey"
+            ),
+            node(
+                score_auc,
+                ["journey_train", "journey_test", "journey_products_altered", 
+                    "journey_user_factors", "journey_item_factors", "journey_hyperparameters"],
+                "journey_score",
+                name="score_journey"
             )
         ]
     )

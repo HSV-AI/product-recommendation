@@ -203,3 +203,64 @@ def clean_jewelry(transactions: pd.DataFrame) -> List[pd.DataFrame]:
     products_df = item_lookup.rename(columns={"StockCode":"product_id", "Description":"description"})
 
     return [renamed_df, products_df]
+
+def clean_journey(transactions: pd.DataFrame, products: pd.DataFrame) -> List[pd.DataFrame]:
+
+    products['DESC'] = products['COMMODITY_DESC'] + products['SUB_COMMODITY_DESC']
+    
+    minimum_purchaces = 2
+    product_group = transactions.loc[:, ['BASKET_ID', 'PRODUCT_ID']].groupby('PRODUCT_ID').count()
+    
+    multi_purchase = product_group[(product_group.BASKET_ID >= minimum_purchaces)].count()
+    single_purchase = product_group[(product_group.BASKET_ID < minimum_purchaces)].count()
+    
+    print('Products with at least',minimum_purchaces,'purchase:',multi_purchase['BASKET_ID'])
+    print('Products with less than',minimum_purchaces,'purchase:',single_purchase['BASKET_ID'])
+    
+    # We can capture the list of mutiple product orders with this:
+    product_filter = product_group[(product_group.BASKET_ID >= minimum_purchaces)].index.tolist()
+
+    filtered_df = transactions[transactions['PRODUCT_ID'].isin(product_filter)].copy()
+
+    print('Original dataframe length:', len(transactions))
+    print('Filtered dataframe length:', len(filtered_df))
+
+    minimum_order_size = 2
+    order_group = filtered_df.loc[:, ['BASKET_ID', 'PRODUCT_ID']].groupby('BASKET_ID').count()
+    
+    multi_order = order_group[(order_group.PRODUCT_ID >= minimum_order_size)].count()
+    single_order = order_group[(order_group.PRODUCT_ID < minimum_order_size)].count()
+    
+    print('Orders with at least',minimum_order_size,'products:',multi_order['PRODUCT_ID'])
+    print('Orders with less than',minimum_order_size,'products:',single_order['PRODUCT_ID'])
+    
+    # We can capture the list of mutiple product orders with this:
+    order_filter = order_group[(order_group.PRODUCT_ID >= minimum_order_size)].index.tolist()
+
+    filtered_df = filtered_df[filtered_df['BASKET_ID'].isin(order_filter)].copy()
+
+    print('Original dataframe length:', len(transactions))
+    print('Filtered dataframe length:', len(filtered_df))
+
+    minimum_purchaces = 2
+    user_group = transactions.loc[:, ['BASKET_ID', 'household_key']].groupby('household_key').count()
+    
+    multi_purchase = user_group[(user_group.BASKET_ID >= minimum_purchaces)].count()
+    single_purchase = user_group[(user_group.BASKET_ID < minimum_purchaces)].count()
+    
+    print('Users with at least',minimum_order_size,'purchase:',multi_purchase['BASKET_ID'])
+    print('Users with less than',minimum_order_size,'purchase:',single_purchase['BASKET_ID'])
+    
+    # We can capture the list of mutiple product orders with this:
+    user_filter = user_group[(user_group.BASKET_ID >= minimum_order_size)].index.tolist()
+
+    filtered_df = filtered_df[filtered_df['household_key'].isin(user_filter)].copy()
+
+    print('Original dataframe length:', len(transactions))
+    print('Filtered dataframe length:', len(filtered_df))
+
+    filtered_df = filtered_df.rename(columns={"PRODUCT_ID": "product_id", "QUANTITY": "quantity", "BASKET_ID": "order_id", "SALES_VALUE": "price"})
+    final_df = filtered_df[["order_id", "product_id", "quantity", "price"]]
+    products = products.rename(columns={"PRODUCT_ID":"product_id", "DESC":"description"})[["product_id", "description"]]
+
+    return [final_df, products]
