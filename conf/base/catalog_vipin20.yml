@@ -1,0 +1,27 @@
+####
+# Vipin20 Dataset
+###
+vipin20_kaggle_data:
+  type: pandas.CSVDataSet
+  filepath: s3://hsv-ai/product-recommendation/data/01_raw/vipin20/transaction_data.csv
+  credentials: aws
+
+vipin20_transactions:
+  type: pandas.CSVDataSet
+  filepath: data/05_model_input/vipin20/transactions.csv
+
+vipin20_products:
+  type: pandas.CSVDataSet
+  filepath: data/05_model_input/vipin20/products.csv
+
+vipin20_user_factors:
+  type: pickle.PickleDataSet
+  filepath: data/06_models/vipin20/user_factors.pkl
+
+vipin20_item_factors:
+  type: pickle.PickleDataSet
+  filepath: data/06_models/vipin20/item_factors.pkl
+
+vipin20_product_train:
+  type: pickle.PickleDataSet
+  filepath: data/06_models/vipin20/product_train.pkl

@@ -1,0 +1,27 @@
+###
+# jewelry dataset
+###
+jewelry_kaggle_data:
+  type: pandas.CSVDataSet
+  filepath: s3://hsv-ai/product-recommendation/data/01_raw/jewelry/jewelry.csv
+  credentials: aws
+
+jewelry_transactions:
+  type: pandas.CSVDataSet
+  filepath: data/05_model_input/jewelry/transactions.csv
+
+jewelry_products:
+  type: pandas.CSVDataSet
+  filepath: data/05_model_input/jewelry/products.csv
+
+jewelry_user_factors:
+  type: pickle.PickleDataSet
+  filepath: data/06_models/jewelry/user_factors.pkl
+
+jewelry_item_factors:
+  type: pickle.PickleDataSet
+  filepath: data/06_models/jewelry/item_factors.pkl
+
+jewelry_product_train:
+  type: pickle.PickleDataSet
+  filepath: data/06_models/jewelry/product_train.pkl

@@ -54,3 +54,40 @@ def clean_electronics(data: pd.DataFrame) -> List[pd.DataFrame]:
     item_lookup['product_id'] = item_lookup.product_id.astype(str) # Encode as strings for future lookup ease
 
     return [filtered_df, item_lookup] 
+
+def clean_brazillian(transactions: pd.DataFrame, products: pd.DataFrame, customers: pd.DataFrame) -> List[pd.DataFrame]:
+
+    transactions['order_id'] = transactions.order_id.astype(str)
+    transactions['product_id'] = transactions.product_id.astype(str)
+    products['product_id'] = products.product_id.astype(str)
+
+    customers = customers[["customer_id", "order_id", "order_purchase_timestamp"]].copy()
+    customers['order_id'] = customers.order_id.astype(str)
+    customers['customer_id'] = customers.customer_id.astype(str)
+
+    transactions = transactions.merge(customers, on='order_id')
+    minimum_order_size = 2
+    order_group = transactions.loc[:, ['order_id', 'product_id']].groupby('order_id').count()
+    
+    multi_order = order_group[(order_group.product_id >= minimum_order_size)].count()
+    single_order = order_group[(order_group.product_id < minimum_order_size)].count()
+    
+    print('Orders with at least',minimum_order_size,'products:',multi_order['product_id'])
+    print('Orders with less than',minimum_order_size,'products:',single_order['product_id'])
+    
+    # We can capture the list of mutiple product orders with this:
+    order_filter = order_group[(order_group.product_id >= minimum_order_size)].index.tolist()
+
+    filtered_df = transactions[transactions['order_id'].isin(order_filter)].copy()
+
+    print('Original dataframe length:', len(transactions))
+    print('Filtered dataframe length:', len(filtered_df))
+
+    filtered_df['quantity'] = 1
+
+    products["description"] = products["product_category_name"] + str(products["product_description_lenght"])
+
+    return [ 
+        filtered_df[["order_id", "product_id", "price", "quantity"]],
+        products[["product_id", "description"]]
+    ]

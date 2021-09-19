@@ -1,0 +1,29 @@
+###
+# ecommerce dataset
+###
+ecommerce_kaggle_data:
+  type: pandas.CSVDataSet
+  filepath: s3://hsv-ai/product-recommendation/data/01_raw/ecommerce/data.csv
+  credentials: aws
+  load_args:
+    encoding: 'iso-8859-1'
+
+ecommerce_transactions:
+  type: pandas.CSVDataSet
+  filepath: data/05_model_input/ecommerce/transactions.csv
+
+ecommerce_products:
+  type: pandas.CSVDataSet
+  filepath: data/05_model_input/ecommerce/products.csv
+
+ecommerce_user_factors:
+  type: pickle.PickleDataSet
+  filepath: data/06_models/ecommerce/user_factors.pkl
+
+ecommerce_item_factors:
+  type: pickle.PickleDataSet
+  filepath: data/06_models/ecommerce/item_factors.pkl
+
+ecommerce_product_train:
+  type: pickle.PickleDataSet
+  filepath: data/06_models/ecommerce/product_train.pkl

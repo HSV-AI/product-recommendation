@@ -1,0 +1,27 @@
+###
+# retailrocket dataset
+###
+retailrocket_kaggle_event_data:
+  type: pandas.CSVDataSet
+  filepath: s3://hsv-ai/product-recommendation/data/01_raw/retailrocket/events.csv
+  credentials: aws
+
+retailrocket_transactions:
+  type: pandas.CSVDataSet
+  filepath: data/05_model_input/retailrocket/transactions.csv
+
+retailrocket_hyperparameters:
+  type: json.JSONDataSet
+  filepath: data/05_model_input/retailrocket/hyperparameters.json
+
+retailrocket_user_factors:
+  type: pickle.PickleDataSet
+  filepath: data/06_models/retailrocket/user_factors.pkl
+
+retailrocket_item_factors:
+  type: pickle.PickleDataSet
+  filepath: data/06_models/retailrocket/item_factors.pkl
+
+retailrocket_product_train:
+  type: pickle.PickleDataSet
+  filepath: data/06_models/retailrocket/product_train.pkl
