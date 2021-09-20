@@ -2,7 +2,7 @@ from kedro.pipeline import Pipeline, node
 
 from productrec.pipelines.scoring.nodes import score_auc
 
-from .cleaning import clean_brazillian, clean_electronics, clean_ecommerce, clean_jewelry, clean_journey
+from .cleaning import clean_brazillian, clean_electronics, clean_ecommerce, clean_jewelry, clean_journey, clean_retailrocket
 from .splitting import split_data
 from .training import train_implicit
 from productrec.pipelines import splitting
@@ -158,6 +158,37 @@ def create_journey_pipeline(**kwargs):
                     "journey_user_factors", "journey_item_factors", "journey_hyperparameters"],
                 "journey_score",
                 name="score_journey"
+            )
+        ]
+    )
+
+def create_retailrocket_pipeline(**kwargs):
+    return Pipeline(
+        [
+            node(
+                clean_retailrocket,
+                "retailrocket_kaggle_event_data",
+                "retailrocket_transactions",
+                name="clean_retailrocket"
+            ),
+            node(
+                split_data,
+                "retailrocket_transactions",
+                ["retailrocket_train", "retailrocket_test", "retailrocket_products_altered", "retailrocket_transactions_altered"],
+                name="split_retailrocket_data"
+            ),
+            node(
+                train_implicit,
+                ["retailrocket_train", "retailrocket_hyperparameters"],
+                ["retailrocket_user_factors", "retailrocket_item_factors", "retailrocket_product_train"],
+                name="train_implicit_retailrocket"
+            ),
+            node(
+                score_auc,
+                ["retailrocket_train", "retailrocket_test", "retailrocket_products_altered", 
+                    "retailrocket_user_factors", "retailrocket_item_factors", "retailrocket_hyperparameters"],
+                "retailrocket_score",
+                name="score_retailrocket"
             )
         ]
     )

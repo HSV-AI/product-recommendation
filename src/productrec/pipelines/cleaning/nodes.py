@@ -264,3 +264,29 @@ def clean_journey(transactions: pd.DataFrame, products: pd.DataFrame) -> List[pd
     products = products.rename(columns={"PRODUCT_ID":"product_id", "DESC":"description"})[["product_id", "description"]]
 
     return [final_df, products]
+
+def clean_retailrocket(events: pd.DataFrame) -> List[pd.DataFrame]:
+    transactions = events[events.event == "transaction"].copy()
+    transactions['order_id'] = transactions.transactionid.astype(str)
+    transactions['customer_id'] = transactions.visitorid.astype(str)
+    transactions['product_id'] = transactions.itemid.astype(str)
+    minimum_order_size = 2
+    order_group = transactions.loc[:, ['order_id', 'product_id']].groupby('order_id').count()
+    
+    multi_order = order_group[(order_group.product_id >= minimum_order_size)].count()
+    single_order = order_group[(order_group.product_id < minimum_order_size)].count()
+    
+    print('Orders with at least',minimum_order_size,'products:',multi_order['product_id'])
+    print('Orders with less than',minimum_order_size,'products:',single_order['product_id'])
+    
+    # We can capture the list of mutiple product orders with this:
+    order_filter = order_group[(order_group.product_id >= minimum_order_size)].index.tolist()
+
+    filtered_df = transactions[transactions['order_id'].isin(order_filter)].copy()
+
+    print('Original dataframe length:', len(transactions))
+    print('Filtered dataframe length:', len(filtered_df))
+
+    filtered_df['quantity'] = 1
+
+    return filtered_df

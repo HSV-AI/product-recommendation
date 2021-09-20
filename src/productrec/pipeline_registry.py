@@ -17,6 +17,7 @@ def register_pipelines() -> Dict[str, Pipeline]:
     ecommerce_pipeline = pipes.create_ecommerce_pipeline()
     jewelry_pipeline = pipes.create_jewelry_pipeline()
     journey_pipeline = pipes.create_journey_pipeline()
+    retailrocket_pipeline = pipes.create_retailrocket_pipeline()
 
     return {
         "electronics": electronics_pipeline,
@@ -24,5 +25,6 @@ def register_pipelines() -> Dict[str, Pipeline]:
         "ecommerce": ecommerce_pipeline,
         "jewelry": jewelry_pipeline,
         "journey": journey_pipeline,
-        "__default__": electronics_pipeline + brazillian_pipeline + ecommerce_pipeline + jewelry_pipeline + journey_pipeline
+        "retailrocket": retailrocket_pipeline,
+        "__default__": electronics_pipeline + brazillian_pipeline + ecommerce_pipeline + jewelry_pipeline + journey_pipeline + retailrocket_pipeline
     }

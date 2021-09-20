@@ -8,7 +8,31 @@ retailrocket_kaggle_event_data:
 
 retailrocket_transactions:
   type: pandas.CSVDataSet
-  filepath: data/05_model_input/retailrocket/transactions.csv
+  filepath: data/03_primary/retailrocket/transactions.csv
+
+retailrocket_products:
+  type: pandas.CSVDataSet
+  filepath: data/03_primary/retailrocket/products.csv
+
+retailrocket_train:
+  type: pickle.PickleDataSet
+  filepath: data/05_model_input/retailrocket/train.pkl
+  backend: pickle
+
+retailrocket_test:
+  type: pickle.PickleDataSet
+  filepath: data/05_model_input/retailrocket/test.pkl
+  backend: pickle
+
+retailrocket_products_altered:
+  type: pickle.PickleDataSet
+  filepath: data/05_model_input/retailrocket/products_altered.pkl
+  backend: pickle
+
+retailrocket_transactions_altered:
+  type: pickle.PickleDataSet
+  filepath: data/05_model_input/retailrocket/transactions_altered.pkl
+  backend: pickle
 
 retailrocket_hyperparameters:
   type: json.JSONDataSet
@@ -25,3 +49,8 @@ retailrocket_item_factors:
 retailrocket_product_train:
   type: pickle.PickleDataSet
   filepath: data/06_models/retailrocket/product_train.pkl
+
+retailrocket_score:
+  type: json.JSONDataSet
+  filepath: data/08_reporting/retailrocket/auc_score.json
+
