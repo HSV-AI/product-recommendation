@@ -7,16 +7,14 @@ jupyter_client
 jupyterlab
 kedro[pandas.CSVDataSet]
 kedro-viz
-# kedro-telemetry~=0.1.0
 nbstripout
 pytest-cov
 pytest-mock
 pytest
 wheel
-
+# There is a version incompatibility in botocore between awscli and s3fs
+# awscli
 s3fs
 scikit-learn
-# streamlit==0.88.0
-# wandb==0.12.1
 matplotlib
 implicit

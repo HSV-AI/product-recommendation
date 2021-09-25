@@ -85,7 +85,7 @@ fastapi==0.66.1
     # via kedro-viz
 flake8==3.9.2
     # via -r /workspaces/product-recommendation/src/requirements.in
-fsspec==2021.8.1
+fsspec==2021.9.0
     # via
     #   kedro
     #   s3fs
@@ -369,7 +369,7 @@ requests==2.25.1
     #   requests-unixsocket
 rope==0.19.0
     # via kedro
-s3fs==2021.8.1
+s3fs==2021.9.0
     # via -r /workspaces/product-recommendation/src/requirements.in
 scikit-learn==0.24.2
     # via -r /workspaces/product-recommendation/src/requirements.in
