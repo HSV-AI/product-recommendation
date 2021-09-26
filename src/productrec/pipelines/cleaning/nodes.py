@@ -290,3 +290,34 @@ def clean_retailrocket(events: pd.DataFrame) -> List[pd.DataFrame]:
     filtered_df['quantity'] = 1
 
     return filtered_df
+
+def clean_vipin20(transactions: pd.DataFrame) -> List[pd.DataFrame]:
+    transactions = transactions[(transactions.NumberOfItemsPurchased > 0) & (transactions.CostPerItem > 0)]
+    q = transactions["CostPerItem"].quantile(0.98)
+    transactions = transactions[transactions["CostPerItem"] < q]
+    q = transactions["NumberOfItemsPurchased"].quantile(0.98)
+    transactions = transactions[transactions["NumberOfItemsPurchased"] < q]
+    
+    minimum_order_size = 2
+
+    order_group = transactions.loc[:, ['TransactionId', 'ItemCode']].groupby('TransactionId').count()
+    
+    multi_order = order_group[(order_group.ItemCode >= minimum_order_size)].count()
+    single_order = order_group[(order_group.ItemCode < minimum_order_size)].count()
+    
+    print('Orders with at least',minimum_order_size,'products:',multi_order['ItemCode'])
+    print('Orders with less than',minimum_order_size,'products:',single_order['ItemCode'])
+    
+    renamed_df = transactions.rename(columns={"TransactionId": "order_id", 
+                            "ItemCode": "product_id", 
+                            "ItemDescription":"description",
+                            "NumberOfItemsPurchased":"quantity",
+                            "CostPerItem":"price"})[['order_id', 'product_id', 'description', 'quantity']]
+
+
+    item_lookup = transactions[['ItemCode', 'ItemDescription']].drop_duplicates() # Only get unique item/description pairs
+    item_lookup['ItemCode'] = item_lookup.ItemCode.astype(str) # Encode as strings for future lookup ease
+
+    products_df = item_lookup.rename(columns={"ItemCode":"product_id", "ItemDescription":"description"})
+
+    return [renamed_df, products_df]

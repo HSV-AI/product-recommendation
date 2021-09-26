@@ -41,7 +41,8 @@ journey_transactions_altered:
 
 journey_hyperparameters:
   type: json.JSONDataSet
-  filepath: data/05_model_input/journey/hyperparameters.json
+  filepath: s3://hsv-ai/product-recommendation/data/05_model_input/journey/hyperparameters.json
+  credentials: aws
 
 journey_user_factors:
   type: pickle.PickleDataSet

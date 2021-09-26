@@ -36,7 +36,8 @@ electronics_transactions_altered:
 
 electronics_hyperparameters:
   type: json.JSONDataSet
-  filepath: data/05_model_input/electronics/hyperparameters.json
+  filepath: s3://hsv-ai/product-recommendation/data/05_model_input/electronics/hyperparameters.json
+  credentials: aws
 
 electronics_user_factors:
   type: pickle.PickleDataSet

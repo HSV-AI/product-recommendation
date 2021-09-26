@@ -46,7 +46,8 @@ brazillian_transactions_altered:
 
 brazillian_hyperparameters:
   type: json.JSONDataSet
-  filepath: data/05_model_input/brazillian/hyperparameters.json
+  filepath: s3://hsv-ai/product-recommendation/data/05_model_input/brazillian/hyperparameters.json
+  credentials: aws
 
 brazillian_user_factors:
   type: pickle.PickleDataSet

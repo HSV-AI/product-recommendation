@@ -36,7 +36,8 @@ jewelry_transactions_altered:
 
 jewelry_hyperparameters:
   type: json.JSONDataSet
-  filepath: data/05_model_input/jewelry/hyperparameters.json
+  filepath: s3://hsv-ai/product-recommendation/data/05_model_input/jewelry/hyperparameters.json
+  credentials: aws
 
 jewelry_user_factors:
   type: pickle.PickleDataSet

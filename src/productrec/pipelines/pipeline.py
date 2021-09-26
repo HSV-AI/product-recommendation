@@ -2,7 +2,7 @@ from kedro.pipeline import Pipeline, node
 
 from productrec.pipelines.scoring.nodes import score_auc
 
-from .cleaning import clean_brazillian, clean_electronics, clean_ecommerce, clean_jewelry, clean_journey, clean_retailrocket
+from .cleaning import clean_brazillian, clean_electronics, clean_ecommerce, clean_jewelry, clean_journey, clean_retailrocket, clean_vipin20
 from .splitting import split_data
 from .training import train_implicit
 from productrec.pipelines import splitting
@@ -189,6 +189,37 @@ def create_retailrocket_pipeline(**kwargs):
                     "retailrocket_user_factors", "retailrocket_item_factors", "retailrocket_hyperparameters"],
                 "retailrocket_score",
                 name="score_retailrocket"
+            )
+        ]
+    )
+
+def create_vipin20_pipeline(**kwargs):
+    return Pipeline(
+        [
+            node(
+                clean_vipin20,
+                "vipin20_kaggle_data",
+                ["vipin20_transactions", "vipin20_products"],
+                name="clean_vipin20"
+            ),
+            node(
+                split_data,
+                "vipin20_transactions",
+                ["vipin20_train", "vipin20_test", "vipin20_products_altered", "vipin20_transactions_altered"],
+                name="split_vipin20_data"
+            ),
+            node(
+                train_implicit,
+                ["vipin20_train", "vipin20_hyperparameters"],
+                ["vipin20_user_factors", "vipin20_item_factors", "vipin20_product_train"],
+                name="train_implicit_vipin20"
+            ),
+            node(
+                score_auc,
+                ["vipin20_train", "vipin20_test", "vipin20_products_altered", 
+                    "vipin20_user_factors", "vipin20_item_factors", "vipin20_hyperparameters"],
+                "vipin20_score",
+                name="score_vipin20"
             )
         ]
     )

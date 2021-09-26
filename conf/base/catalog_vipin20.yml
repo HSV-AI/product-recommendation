@@ -8,11 +8,36 @@ vipin20_kaggle_data:
 
 vipin20_transactions:
   type: pandas.CSVDataSet
-  filepath: data/05_model_input/vipin20/transactions.csv
+  filepath: data/03_primary/vipin20/transactions.csv
 
 vipin20_products:
   type: pandas.CSVDataSet
-  filepath: data/05_model_input/vipin20/products.csv
+  filepath: data/03_primary/vipin20/products.csv
+
+vipin20_train:
+  type: pickle.PickleDataSet
+  filepath: data/05_model_input/vipin20/train.pkl
+  backend: pickle
+
+vipin20_test:
+  type: pickle.PickleDataSet
+  filepath: data/05_model_input/vipin20/test.pkl
+  backend: pickle
+
+vipin20_products_altered:
+  type: pickle.PickleDataSet
+  filepath: data/05_model_input/vipin20/products_altered.pkl
+  backend: pickle
+
+vipin20_transactions_altered:
+  type: pickle.PickleDataSet
+  filepath: data/05_model_input/vipin20/transactions_altered.pkl
+  backend: pickle
+
+vipin20_hyperparameters:
+  type: json.JSONDataSet
+  filepath: s3://hsv-ai/product-recommendation/data/05_model_input/vipin20/hyperparameters.json
+  credentials: aws
 
 vipin20_user_factors:
   type: pickle.PickleDataSet
@@ -25,3 +50,8 @@ vipin20_item_factors:
 vipin20_product_train:
   type: pickle.PickleDataSet
   filepath: data/06_models/vipin20/product_train.pkl
+
+vipin20_score:
+  type: json.JSONDataSet
+  filepath: data/08_reporting/vipin20/auc_score.json
+

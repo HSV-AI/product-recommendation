@@ -4,3 +4,4 @@ from .pipeline import create_ecommerce_pipeline
 from .pipeline import create_jewelry_pipeline
 from .pipeline import create_journey_pipeline
 from .pipeline import create_retailrocket_pipeline
+from .pipeline import create_vipin20_pipeline
