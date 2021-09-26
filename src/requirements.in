@@ -1,0 +1,20 @@
+black
+flake8
+ipython
+isort
+jupyter
+jupyter_client
+jupyterlab
+kedro[pandas.CSVDataSet]
+kedro-viz
+nbstripout
+pytest-cov
+pytest-mock
+pytest
+wheel
+# There is a version incompatibility in botocore between awscli and s3fs
+# awscli
+s3fs
+scikit-learn
+matplotlib
+implicit
