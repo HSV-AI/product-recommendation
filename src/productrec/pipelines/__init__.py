@@ -1,7 +1,9 @@
-from .pipeline import create_electronics_pipeline
-from .pipeline import create_brazillian_pipeline
-from .pipeline import create_ecommerce_pipeline
-from .pipeline import create_jewelry_pipeline
-from .pipeline import create_journey_pipeline
-from .pipeline import create_retailrocket_pipeline
-from .pipeline import create_vipin20_pipeline
+from .pipeline import  (
+    create_electronics_pipeline,
+    create_brazillian_pipeline,
+    create_ecommerce_pipeline,
+    create_jewelry_pipeline,
+    create_journey_pipeline,
+    create_retailrocket_pipeline,
+    create_vipin20_pipeline
+)
