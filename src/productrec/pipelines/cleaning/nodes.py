@@ -321,3 +321,33 @@ def clean_vipin20(transactions: pd.DataFrame) -> List[pd.DataFrame]:
     products_df = item_lookup.rename(columns={"ItemCode":"product_id", "ItemDescription":"description"})
 
     return [renamed_df, products_df]
+
+def clean_instacart(transactions: pd.DataFrame, products: pd.DataFrame) -> List[pd.DataFrame]:
+    transactions['order_id'] = transactions.order_id.astype(str)
+    transactions['product_id'] = transactions.product_id.astype(str)
+    products['product_id'] = products.product_id.astype(str)
+
+    minimum_order_size = 2
+    order_group = transactions.loc[:, ['order_id', 'product_id']].groupby('order_id').count()
+    
+    multi_order = order_group[(order_group.product_id >= minimum_order_size)].count()
+    single_order = order_group[(order_group.product_id < minimum_order_size)].count()
+    
+    print('Orders with at least',minimum_order_size,'products:',multi_order['product_id'])
+    print('Orders with less than',minimum_order_size,'products:',single_order['product_id'])
+    
+    # We can capture the list of mutiple product orders with this:
+    order_filter = order_group[(order_group.product_id >= minimum_order_size)].index.tolist()
+
+    filtered_df = transactions[transactions['order_id'].isin(order_filter)].copy()
+
+    print('Original dataframe length:', len(transactions))
+    print('Filtered dataframe length:', len(filtered_df))
+
+    filtered_df['quantity'] = 1
+    filtered_df['price'] = 1
+
+    filtered_df = filtered_df[["order_id", "product_id", "price", "quantity"]]
+    products["description"] = products["product_name"]
+    products = products[["product_id", "description"]]
+    return [ filtered_df, products ]
