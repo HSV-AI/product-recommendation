@@ -14,7 +14,7 @@ pytest
 wheel
 # There is a version incompatibility in botocore between awscli and s3fs
 # awscli
-s3fs
+# s3fs
 scikit-learn
 matplotlib
 implicit
