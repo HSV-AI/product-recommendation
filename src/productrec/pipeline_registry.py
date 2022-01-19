@@ -19,11 +19,13 @@ def register_pipelines() -> Dict[str, Pipeline]:
     journey_pipeline = pipes.create_journey_pipeline()
     retailrocket_pipeline = pipes.create_retailrocket_pipeline()
     vipin20_pipeline = pipes.create_vipin20_pipeline()
+    instacart_pipeline = pipes.create_instacart_pipeline()
 
     return {
         "electronics": electronics_pipeline,
         "brazillian": brazillian_pipeline,
         "ecommerce": ecommerce_pipeline,
+        "instacart": instacart_pipeline,
         "jewelry": jewelry_pipeline,
         "journey": journey_pipeline,
         "retailrocket": retailrocket_pipeline,

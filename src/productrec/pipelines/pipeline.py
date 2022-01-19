@@ -2,7 +2,13 @@ from kedro.pipeline import Pipeline, node
 
 from productrec.pipelines.scoring.nodes import score_auc
 
-from .cleaning import clean_brazillian, clean_electronics, clean_ecommerce, clean_jewelry, clean_journey, clean_retailrocket, clean_vipin20
+from .cleaning import ( 
+    clean_brazillian, 
+    clean_electronics, clean_ecommerce, clean_journey,
+    clean_jewelry, clean_instacart, 
+    clean_retailrocket, clean_vipin20
+)
+
 from .splitting import split_data
 from .training import train_implicit
 from productrec.pipelines import splitting
@@ -220,6 +226,37 @@ def create_vipin20_pipeline(**kwargs):
                     "vipin20_user_factors", "vipin20_item_factors", "vipin20_hyperparameters"],
                 "vipin20_score",
                 name="score_vipin20"
+            )
+        ]
+    )
+
+def create_instacart_pipeline(**kwargs):
+    return Pipeline(
+        [
+            node(
+                clean_instacart,
+                ["instacart_kaggle_order_data", "instacart_kaggle_product_data"],
+                ["instacart_transactions", "instacart_products"],
+                name="clean_instacart"
+            ),
+            node(
+                split_data,
+                "instacart_transactions",
+                ["instacart_train", "instacart_test", "instacart_products_altered", "instacart_transactions_altered"],
+                name="split_instacart_data"
+            ),
+            node(
+                train_implicit,
+                ["instacart_train", "instacart_hyperparameters"],
+                ["instacart_user_factors", "instacart_item_factors", "instacart_product_train"],
+                name="train_implicit_instacart"
+            ),
+            node(
+                score_auc,
+                ["instacart_train", "instacart_test", "instacart_products_altered", 
+                    "instacart_user_factors", "instacart_item_factors", "instacart_hyperparameters"],
+                "instacart_score",
+                name="score_instacart"
             )
         ]
     )
