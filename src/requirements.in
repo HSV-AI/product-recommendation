@@ -5,7 +5,7 @@ isort
 jupyter
 jupyter_client
 jupyterlab
-kedro[pandas.CSVDataSet]
+kedro[pandas.CSVDataSet]==0.17.6
 kedro-viz
 nbstripout
 pytest-cov
@@ -13,9 +13,9 @@ pytest-mock
 pytest
 wheel
 # There is a version incompatibility in botocore between awscli and s3fs
-# awscli
+awscli
 # s3fs
 scikit-learn
 matplotlib
-implicit
 tabulate
+git+https://github.com/benfred/implicit.git@main
