@@ -4,7 +4,6 @@
 instacart_kaggle_order_data:
   type: pandas.CSVDataSet
   filepath: s3://hsv-ai/product-recommendation/data/01_raw/instacart/order_products__prior.csv.zip
-  credentials: aws
   load_args:
     sep: ','
     compression: 'zip'
@@ -12,7 +11,6 @@ instacart_kaggle_order_data:
 instacart_kaggle_product_data:
   type: pandas.CSVDataSet
   filepath: s3://hsv-ai/product-recommendation/data/01_raw/instacart/products.csv.zip
-  credentials: aws
   load_args:
       sep: ','
       compression: 'zip'
@@ -48,7 +46,6 @@ instacart_transactions_altered:
 instacart_hyperparameters:
   type: json.JSONDataSet
   filepath: s3://hsv-ai/product-recommendation/data/05_model_input/instacart/hyperparameters.json
-  credentials: aws
 
 instacart_user_factors:
   type: pickle.PickleDataSet

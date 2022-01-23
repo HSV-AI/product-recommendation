@@ -4,7 +4,6 @@
 vipin20_kaggle_data:
   type: pandas.CSVDataSet
   filepath: s3://hsv-ai/product-recommendation/data/01_raw/vipin20/transaction_data.csv
-  credentials: aws
 
 vipin20_transactions:
   type: pandas.CSVDataSet
@@ -37,7 +36,6 @@ vipin20_transactions_altered:
 vipin20_hyperparameters:
   type: json.JSONDataSet
   filepath: s3://hsv-ai/product-recommendation/data/05_model_input/vipin20/hyperparameters.json
-  credentials: aws
 
 vipin20_user_factors:
   type: pickle.PickleDataSet
