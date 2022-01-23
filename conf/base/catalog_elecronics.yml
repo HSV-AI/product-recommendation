@@ -4,7 +4,6 @@
 electronics_kaggle_data:
   type: pandas.CSVDataSet
   filepath: s3://hsv-ai/product-recommendation/data/01_raw/electronics/kz.csv
-  credentials: aws
 
 electronics_transactions:
   type: pandas.CSVDataSet
@@ -37,7 +36,6 @@ electronics_transactions_altered:
 electronics_hyperparameters:
   type: json.JSONDataSet
   filepath: s3://hsv-ai/product-recommendation/data/05_model_input/electronics/hyperparameters.json
-  credentials: aws
 
 electronics_user_factors:
   type: pickle.PickleDataSet

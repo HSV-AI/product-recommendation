@@ -4,7 +4,6 @@
 retailrocket_kaggle_event_data:
   type: pandas.CSVDataSet
   filepath: s3://hsv-ai/product-recommendation/data/01_raw/retailrocket/events.csv
-  credentials: aws
 
 retailrocket_transactions:
   type: pandas.CSVDataSet
@@ -37,7 +36,6 @@ retailrocket_transactions_altered:
 retailrocket_hyperparameters:
   type: json.JSONDataSet
   filepath: s3://hsv-ai/product-recommendation/data/05_model_input/retailrocket/hyperparameters.json
-  credentials: aws
 
 retailrocket_user_factors:
   type: pickle.PickleDataSet

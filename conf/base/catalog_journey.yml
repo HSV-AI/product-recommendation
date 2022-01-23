@@ -4,12 +4,10 @@
 journey_kaggle_transaction_data:
   type: pandas.CSVDataSet
   filepath: s3://hsv-ai/product-recommendation/data/01_raw/journey/transaction_data.csv
-  credentials: aws
 
 journey_kaggle_product_data:
   type: pandas.CSVDataSet
   filepath: s3://hsv-ai/product-recommendation/data/01_raw/journey/product.csv
-  credentials: aws
 
 journey_transactions:
   type: pandas.CSVDataSet
@@ -42,7 +40,6 @@ journey_transactions_altered:
 journey_hyperparameters:
   type: json.JSONDataSet
   filepath: s3://hsv-ai/product-recommendation/data/05_model_input/journey/hyperparameters.json
-  credentials: aws
 
 journey_user_factors:
   type: pickle.PickleDataSet

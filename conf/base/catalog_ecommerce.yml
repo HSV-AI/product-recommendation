@@ -4,7 +4,6 @@
 ecommerce_kaggle_data:
   type: pandas.CSVDataSet
   filepath: s3://hsv-ai/product-recommendation/data/01_raw/ecommerce/data.csv
-  credentials: aws
   load_args:
     encoding: 'iso-8859-1'
 
@@ -43,7 +42,6 @@ ecommerce_transactions_altered:
 ecommerce_hyperparameters:
   type: json.JSONDataSet
   filepath: s3://hsv-ai/product-recommendation/data/05_model_input/ecommerce/hyperparameters.json
-  credentials: aws
 
 ecommerce_user_factors:
   type: pickle.PickleDataSet

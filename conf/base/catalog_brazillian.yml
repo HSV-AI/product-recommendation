@@ -4,17 +4,14 @@
 brazillian_kaggle_order_data:
   type: pandas.CSVDataSet
   filepath: s3://hsv-ai/product-recommendation/data/01_raw/brazillian/olist_order_items_dataset.csv
-  credentials: aws
 
 brazillian_kaggle_product_data:
   type: pandas.CSVDataSet
   filepath: s3://hsv-ai/product-recommendation/data/01_raw/brazillian/olist_products_dataset.csv
-  credentials: aws
 
 brazillian_kaggle_customer_data:
   type: pandas.CSVDataSet
   filepath: s3://hsv-ai/product-recommendation/data/01_raw/brazillian/olist_orders_dataset.csv
-  credentials: aws
 
 brazillian_transactions:
   type: pandas.CSVDataSet
@@ -47,7 +44,6 @@ brazillian_transactions_altered:
 brazillian_hyperparameters:
   type: json.JSONDataSet
   filepath: s3://hsv-ai/product-recommendation/data/05_model_input/brazillian/hyperparameters.json
-  credentials: aws
 
 brazillian_user_factors:
   type: pickle.PickleDataSet
