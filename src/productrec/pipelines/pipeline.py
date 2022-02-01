@@ -1,10 +1,16 @@
 from kedro.pipeline import Pipeline, node
 
 from productrec.pipelines.scoring.nodes import score_auc
+from productrec.pipelines.transform.electronics import transform_electronics
+
+from .transform import (
+    transform_vipin20,
+    transform_electronics
+)
 
 from .cleaning import ( 
     clean_brazillian, 
-    clean_electronics, clean_ecommerce, clean_journey,
+    clean_ecommerce, clean_journey,
     clean_jewelry, clean_instacart, 
     clean_retailrocket, clean_vipin20
 )
@@ -17,30 +23,11 @@ def create_electronics_pipeline(**kwargs):
     return Pipeline(
         [
             node(
-                clean_electronics,
+                transform_electronics,
                 "electronics_kaggle_data",
-                ["electronics_transactions", "electronics_products"],
-                name="clean_electronics",
+                ["products", "transactions"],
+                name="transform_electronics",
             ),
-             node(
-                split_data,
-                "electronics_transactions",
-                ["electronics_train", "electronics_test", "electronics_products_altered", "electronics_transactions_altered"],
-                name="split_electronics_data"
-            ),
-            node(
-                train_implicit,
-                ["electronics_train", "electronics_hyperparameters"],
-                ["electronics_user_factors", "electronics_item_factors", "electronics_product_train"],
-                name="train_implicit_electronics"
-            ),
-            node(
-                score_auc,
-                ["electronics_train", "electronics_test", "electronics_products_altered", 
-                    "electronics_user_factors", "electronics_item_factors", "electronics_hyperparameters"],
-                "electronics_score",
-                name="score_electronics"
-            )
         ]
     )
 
@@ -203,30 +190,11 @@ def create_vipin20_pipeline(**kwargs):
     return Pipeline(
         [
             node(
-                clean_vipin20,
+                transform_vipin20,
                 "vipin20_kaggle_data",
-                ["vipin20_transactions", "vipin20_products"],
-                name="clean_vipin20"
+                ["transactions", "products"],
+                name="transform_vipin20"
             ),
-            node(
-                split_data,
-                "vipin20_transactions",
-                ["vipin20_train", "vipin20_test", "vipin20_products_altered", "vipin20_transactions_altered"],
-                name="split_vipin20_data"
-            ),
-            node(
-                train_implicit,
-                ["vipin20_train", "vipin20_hyperparameters"],
-                ["vipin20_user_factors", "vipin20_item_factors", "vipin20_product_train"],
-                name="train_implicit_vipin20"
-            ),
-            node(
-                score_auc,
-                ["vipin20_train", "vipin20_test", "vipin20_products_altered", 
-                    "vipin20_user_factors", "vipin20_item_factors", "vipin20_hyperparameters"],
-                "vipin20_score",
-                name="score_vipin20"
-            )
         ]
     )
 
@@ -256,6 +224,31 @@ def create_instacart_pipeline(**kwargs):
                 ["instacart_train", "instacart_test", "instacart_products_altered", 
                     "instacart_user_factors", "instacart_item_factors", "instacart_hyperparameters"],
                 "instacart_score",
+                name="score_instacart"
+            )
+        ]
+    )
+
+def create_implicit_pipeline(**kwargs):
+    return Pipeline(
+        [
+            node(
+                split_data,
+                "transactions",
+                ["train", "test", "products_altered", "transactions_altered"],
+                name="split_data"
+            ),
+            node(
+                train_implicit,
+                ["train", "parameters"],
+                ["user_factors", "item_factors", "product_train"],
+                name="train_implicit_instacart"
+            ),
+            node(
+                score_auc,
+                ["train", "test", "products_altered", 
+                    "user_factors", "item_factors", "parameters"],
+                "score",
                 name="score_instacart"
             )
         ]

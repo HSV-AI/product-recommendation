@@ -12,23 +12,13 @@ def register_pipelines() -> Dict[str, Pipeline]:
         A mapping from a pipeline name to a ``Pipeline`` object.
 
     """
-    electronics_pipeline = pipes.create_electronics_pipeline()
-    brazillian_pipeline = pipes.create_brazillian_pipeline()
-    ecommerce_pipeline = pipes.create_ecommerce_pipeline()
-    jewelry_pipeline = pipes.create_jewelry_pipeline()
-    journey_pipeline = pipes.create_journey_pipeline()
-    retailrocket_pipeline = pipes.create_retailrocket_pipeline()
     vipin20_pipeline = pipes.create_vipin20_pipeline()
-    instacart_pipeline = pipes.create_instacart_pipeline()
+    implicit_pipeline = pipes.create_implicit_pipeline()
+    electronics_pipeline = pipes.create_electronics_pipeline()
 
     return {
-        "electronics": electronics_pipeline,
-        "brazillian": brazillian_pipeline,
-        "ecommerce": ecommerce_pipeline,
-        "instacart": instacart_pipeline,
-        "jewelry": jewelry_pipeline,
-        "journey": journey_pipeline,
-        "retailrocket": retailrocket_pipeline,
         "vipin20": vipin20_pipeline,
-        "__default__": electronics_pipeline + brazillian_pipeline + ecommerce_pipeline + jewelry_pipeline + journey_pipeline + retailrocket_pipeline + vipin20_pipeline
+        "electronics": electronics_pipeline,
+        "implicit": implicit_pipeline,
+        "__default__": vipin20_pipeline
     }

@@ -4,54 +4,8 @@
 retailrocket_kaggle_event_data:
   type: pandas.CSVDataSet
   filepath: s3://hsv-ai/product-recommendation/data/01_raw/retailrocket/events.csv
-  credentials: aws
-
-retailrocket_transactions:
-  type: pandas.CSVDataSet
-  filepath: data/03_primary/retailrocket/transactions.csv
-
-retailrocket_products:
-  type: pandas.CSVDataSet
-  filepath: data/03_primary/retailrocket/products.csv
-
-retailrocket_train:
-  type: pickle.PickleDataSet
-  filepath: data/05_model_input/retailrocket/train.pkl
-  backend: pickle
-
-retailrocket_test:
-  type: pickle.PickleDataSet
-  filepath: data/05_model_input/retailrocket/test.pkl
-  backend: pickle
-
-retailrocket_products_altered:
-  type: pickle.PickleDataSet
-  filepath: data/05_model_input/retailrocket/products_altered.pkl
-  backend: pickle
-
-retailrocket_transactions_altered:
-  type: pickle.PickleDataSet
-  filepath: data/05_model_input/retailrocket/transactions_altered.pkl
-  backend: pickle
 
 retailrocket_hyperparameters:
   type: json.JSONDataSet
   filepath: s3://hsv-ai/product-recommendation/data/05_model_input/retailrocket/hyperparameters.json
-  credentials: aws
-
-retailrocket_user_factors:
-  type: pickle.PickleDataSet
-  filepath: data/06_models/retailrocket/user_factors.pkl
-
-retailrocket_item_factors:
-  type: pickle.PickleDataSet
-  filepath: data/06_models/retailrocket/item_factors.pkl
-
-retailrocket_product_train:
-  type: pickle.PickleDataSet
-  filepath: data/06_models/retailrocket/product_train.pkl
-
-retailrocket_score:
-  type: json.JSONDataSet
-  filepath: data/08_reporting/retailrocket/auc_score.json
 

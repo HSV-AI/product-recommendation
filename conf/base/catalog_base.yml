@@ -1,0 +1,48 @@
+products:
+  type: pandas.CSVDataSet
+  filepath: data/02_intermediate/products.csv
+
+transactions:
+  type: pandas.CSVDataSet
+  filepath: data/02_intermediate/transactions.csv
+
+clean_transaction:
+  type: pandas.CSVDataSet
+  filepath: data/03_primary/transactions.csv
+
+train:
+  type: pickle.PickleDataSet
+  filepath: data/05_model_input/train.pkl
+  backend: pickle
+
+test:
+  type: pickle.PickleDataSet
+  filepath: data/05_model_input/test.pkl
+  backend: pickle
+
+products_altered:
+  type: pickle.PickleDataSet
+  filepath: data/05_model_input/products_altered.pkl
+  backend: pickle
+
+transactions_altered:
+  type: pickle.PickleDataSet
+  filepath: data/05_model_input/transactions_altered.pkl
+  backend: pickle
+
+user_factors:
+  type: pickle.PickleDataSet
+  filepath: data/06_models/user_factors.pkl
+
+item_factors:
+  type: pickle.PickleDataSet
+  filepath: data/06_models/item_factors.pkl
+
+product_train:
+  type: pickle.PickleDataSet
+  filepath: data/06_models/product_train.pkl
+
+score:
+  type: json.JSONDataSet
+  filepath: data/08_reporting/auc_score.json
+

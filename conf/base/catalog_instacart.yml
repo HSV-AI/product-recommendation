@@ -4,7 +4,6 @@
 instacart_kaggle_order_data:
   type: pandas.CSVDataSet
   filepath: s3://hsv-ai/product-recommendation/data/01_raw/instacart/order_products__prior.csv.zip
-  credentials: aws
   load_args:
     sep: ','
     compression: 'zip'
@@ -12,57 +11,12 @@ instacart_kaggle_order_data:
 instacart_kaggle_product_data:
   type: pandas.CSVDataSet
   filepath: s3://hsv-ai/product-recommendation/data/01_raw/instacart/products.csv.zip
-  credentials: aws
   load_args:
       sep: ','
       compression: 'zip'
 
-instacart_transactions:
-  type: pandas.CSVDataSet
-  filepath: data/03_primary/instacart/transactions.csv
-
-instacart_products:
-  type: pandas.CSVDataSet
-  filepath: data/03_primary/instacart/products.csv
-
-instacart_train:
-  type: pickle.PickleDataSet
-  filepath: data/05_model_input/instacart/train.pkl
-  backend: pickle
-
-instacart_test:
-  type: pickle.PickleDataSet
-  filepath: data/05_model_input/instacart/test.pkl
-  backend: pickle
-
-instacart_products_altered:
-  type: pickle.PickleDataSet
-  filepath: data/05_model_input/instacart/products_altered.pkl
-  backend: pickle
-
-instacart_transactions_altered:
-  type: pickle.PickleDataSet
-  filepath: data/05_model_input/instacart/transactions_altered.pkl
-  backend: pickle
-
 instacart_hyperparameters:
   type: json.JSONDataSet
   filepath: s3://hsv-ai/product-recommendation/data/05_model_input/instacart/hyperparameters.json
-  credentials: aws
 
-instacart_user_factors:
-  type: pickle.PickleDataSet
-  filepath: data/06_models/instacart/user_factors.pkl
-
-instacart_item_factors:
-  type: pickle.PickleDataSet
-  filepath: data/06_models/instacart/item_factors.pkl
-
-instacart_product_train:
-  type: pickle.PickleDataSet
-  filepath: data/06_models/instacart/product_train.pkl
-
-instacart_score:
-  type: json.JSONDataSet
-  filepath: data/08_reporting/instacart/auc_score.json
 

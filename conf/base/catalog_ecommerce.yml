@@ -4,60 +4,9 @@
 ecommerce_kaggle_data:
   type: pandas.CSVDataSet
   filepath: s3://hsv-ai/product-recommendation/data/01_raw/ecommerce/data.csv
-  credentials: aws
   load_args:
     encoding: 'iso-8859-1'
-
-ecommerce_transactions:
-  type: pandas.CSVDataSet
-  filepath: data/05_model_input/ecommerce/transactions.csv
-
-ecommerce_transactions:
-  type: pandas.CSVDataSet
-  filepath: data/03_primary/ecommerce/transactions.csv
-
-ecommerce_products:
-  type: pandas.CSVDataSet
-  filepath: data/03_primary/ecommerce/products.csv
-
-ecommerce_train:
-  type: pickle.PickleDataSet
-  filepath: data/05_model_input/ecommerce/train.pkl
-  backend: pickle
-
-ecommerce_test:
-  type: pickle.PickleDataSet
-  filepath: data/05_model_input/ecommerce/test.pkl
-  backend: pickle
-
-ecommerce_products_altered:
-  type: pickle.PickleDataSet
-  filepath: data/05_model_input/ecommerce/products_altered.pkl
-  backend: pickle
-
-ecommerce_transactions_altered:
-  type: pickle.PickleDataSet
-  filepath: data/05_model_input/ecommerce/transactions_altered.pkl
-  backend: pickle
 
 ecommerce_hyperparameters:
   type: json.JSONDataSet
   filepath: s3://hsv-ai/product-recommendation/data/05_model_input/ecommerce/hyperparameters.json
-  credentials: aws
-
-ecommerce_user_factors:
-  type: pickle.PickleDataSet
-  filepath: data/06_models/ecommerce/user_factors.pkl
-
-ecommerce_item_factors:
-  type: pickle.PickleDataSet
-  filepath: data/06_models/ecommerce/item_factors.pkl
-
-ecommerce_product_train:
-  type: pickle.PickleDataSet
-  filepath: data/06_models/ecommerce/product_train.pkl
-
-ecommerce_score:
-  type: json.JSONDataSet
-  filepath: data/08_reporting/ecommerce/auc_score.json
-

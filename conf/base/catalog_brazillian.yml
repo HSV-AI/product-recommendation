@@ -4,64 +4,16 @@
 brazillian_kaggle_order_data:
   type: pandas.CSVDataSet
   filepath: s3://hsv-ai/product-recommendation/data/01_raw/brazillian/olist_order_items_dataset.csv
-  credentials: aws
 
 brazillian_kaggle_product_data:
   type: pandas.CSVDataSet
   filepath: s3://hsv-ai/product-recommendation/data/01_raw/brazillian/olist_products_dataset.csv
-  credentials: aws
 
 brazillian_kaggle_customer_data:
   type: pandas.CSVDataSet
   filepath: s3://hsv-ai/product-recommendation/data/01_raw/brazillian/olist_orders_dataset.csv
-  credentials: aws
-
-brazillian_transactions:
-  type: pandas.CSVDataSet
-  filepath: data/03_primary/brazillian/transactions.csv
-
-brazillian_products:
-  type: pandas.CSVDataSet
-  filepath: data/03_primary/brazillian/products.csv
-
-brazillian_train:
-  type: pickle.PickleDataSet
-  filepath: data/05_model_input/brazillian/train.pkl
-  backend: pickle
-
-brazillian_test:
-  type: pickle.PickleDataSet
-  filepath: data/05_model_input/brazillian/test.pkl
-  backend: pickle
-
-brazillian_products_altered:
-  type: pickle.PickleDataSet
-  filepath: data/05_model_input/brazillian/products_altered.pkl
-  backend: pickle
-
-brazillian_transactions_altered:
-  type: pickle.PickleDataSet
-  filepath: data/05_model_input/brazillian/transactions_altered.pkl
-  backend: pickle
 
 brazillian_hyperparameters:
   type: json.JSONDataSet
   filepath: s3://hsv-ai/product-recommendation/data/05_model_input/brazillian/hyperparameters.json
-  credentials: aws
-
-brazillian_user_factors:
-  type: pickle.PickleDataSet
-  filepath: data/06_models/brazillian/user_factors.pkl
-
-brazillian_item_factors:
-  type: pickle.PickleDataSet
-  filepath: data/06_models/brazillian/item_factors.pkl
-
-brazillian_product_train:
-  type: pickle.PickleDataSet
-  filepath: data/06_models/brazillian/product_train.pkl
-
-brazillian_score:
-  type: json.JSONDataSet
-  filepath: data/08_reporting/brazillian/auc_score.json
 

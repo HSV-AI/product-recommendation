@@ -9,12 +9,12 @@ import scipy
 from sklearn import metrics
 from pandas.api.types import CategoricalDtype
 
-def train_implicit(product_train: scipy.sparse.csr_matrix, hyperparams: Dict) -> Any:
+def train_implicit(product_train: scipy.sparse.csr_matrix, params: Dict) -> Any:
 
-    alpha = hyperparams['alpha']    
-    factors = hyperparams['factors']
-    regularization = hyperparams['regularization']
-    iterations = hyperparams['iterations']
+    alpha = params['alpha']    
+    factors = params['factors']
+    regularization = params['regularization']
+    iterations = params['iterations']
 
     model = implicit.als.AlternatingLeastSquares(factors=factors,
                                         regularization=regularization,

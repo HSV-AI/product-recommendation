@@ -4,54 +4,8 @@
 jewelry_kaggle_data:
   type: pandas.CSVDataSet
   filepath: s3://hsv-ai/product-recommendation/data/01_raw/jewelry/jewelry.csv
-  credentials: aws
-
-jewelry_transactions:
-  type: pandas.CSVDataSet
-  filepath: data/03_primary/jewelry/transactions.csv
-
-jewelry_products:
-  type: pandas.CSVDataSet
-  filepath: data/03_primary/jewelry/products.csv
-
-jewelry_train:
-  type: pickle.PickleDataSet
-  filepath: data/05_model_input/jewelry/train.pkl
-  backend: pickle
-
-jewelry_test:
-  type: pickle.PickleDataSet
-  filepath: data/05_model_input/jewelry/test.pkl
-  backend: pickle
-
-jewelry_products_altered:
-  type: pickle.PickleDataSet
-  filepath: data/05_model_input/jewelry/products_altered.pkl
-  backend: pickle
-
-jewelry_transactions_altered:
-  type: pickle.PickleDataSet
-  filepath: data/05_model_input/jewelry/transactions_altered.pkl
-  backend: pickle
 
 jewelry_hyperparameters:
   type: json.JSONDataSet
   filepath: s3://hsv-ai/product-recommendation/data/05_model_input/jewelry/hyperparameters.json
-  credentials: aws
-
-jewelry_user_factors:
-  type: pickle.PickleDataSet
-  filepath: data/06_models/jewelry/user_factors.pkl
-
-jewelry_item_factors:
-  type: pickle.PickleDataSet
-  filepath: data/06_models/jewelry/item_factors.pkl
-
-jewelry_product_train:
-  type: pickle.PickleDataSet
-  filepath: data/06_models/jewelry/product_train.pkl
-
-jewelry_score:
-  type: json.JSONDataSet
-  filepath: data/08_reporting/jewelry/auc_score.json
 
