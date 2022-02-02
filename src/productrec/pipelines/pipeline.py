@@ -242,14 +242,14 @@ def create_implicit_pipeline(**kwargs):
                 train_implicit,
                 ["train", "parameters"],
                 ["user_factors", "item_factors", "product_train"],
-                name="train_implicit_instacart"
+                name="train_implicit"
             ),
             node(
                 score_auc,
                 ["train", "test", "products_altered", 
                     "user_factors", "item_factors", "parameters"],
                 "score",
-                name="score_instacart"
+                name="score_implicit"
             )
         ]
     )
