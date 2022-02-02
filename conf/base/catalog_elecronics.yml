@@ -4,7 +4,6 @@
 electronics_kaggle_data:
   type: pandas.CSVDataSet
   filepath: s3://hsv-ai/product-recommendation/data/01_raw/electronics/kz.csv
-
 electronics_hyperparameters:
   type: json.JSONDataSet
   filepath: s3://hsv-ai/product-recommendation/data/05_model_input/electronics/hyperparameters.json
