@@ -34,3 +34,6 @@ jobs:
     - name: Test with pytest
       run: |
         pytest
+    - name: Run Vipin20 Pipeline
+      run: |
+        kedro run --pipeline vipin20
