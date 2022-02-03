@@ -45,7 +45,7 @@ def clean_data(transactions: pd.DataFrame) -> pd.DataFrame:
     order_counts = filtered_df['order_id'].value_counts()
     num_orders = len(order_counts)
     num_items = len(product_counts)
-    sparsity = 1 - len(data) / (num_orders * num_items)
+    sparsity = 1 - len(transactions) / (num_orders * num_items)
     print(f'number of orders: {num_orders}, number of items: {num_items}')
     print(f'matrix sparsity: {sparsity:f}')
 
