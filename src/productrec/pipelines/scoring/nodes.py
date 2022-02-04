@@ -5,6 +5,7 @@ import numpy as np
 import implicit
 import scipy
 from sklearn import metrics
+import logging
 
 def auc_score(predictions, test):
     '''
@@ -46,6 +47,8 @@ def calc_mean_auc(training_set, altered_users, predictions, test_set):
     The mean AUC (area under the Receiver Operator Characteristic curve) of the test set only on user-item interactions
     there were originally zero to test ranking ability in addition to the most popular items as a benchmark.
     '''
+    log = logging.getLogger(__name__)
+
     
     store_auc = [] # An empty list to store the AUC for each user that had an item removed from the training set
     popularity_auc = [] # To store popular AUC scores
@@ -55,6 +58,7 @@ def calc_mean_auc(training_set, altered_users, predictions, test_set):
         training_row = training_set[user,:].toarray().reshape(-1) # Get the training set row
         zero_inds = np.where(training_row == 0) # Find where the interaction had not yet occurred
         # Get the predicted values based on our user/item vectors
+        log.info(len(zero_inds))
         user_vec = predictions[0][user,:]
         pred = user_vec.dot(item_vecs).toarray()[0,zero_inds].reshape(-1)
         # Get only the items that were originally zero
@@ -76,11 +80,19 @@ def score_auc(
                 products_altered: List,
                 user_vecs: List, 
                 item_vecs: List, 
-                hyperparams: Dict) -> Dict:
+                params: Dict) -> Dict:
 
-    factors = hyperparams['factors']
-    regularization = hyperparams['regularization']
-    iterations = hyperparams['iterations']
+    log = logging.getLogger(__name__)
+
+    factors = params['factors']
+    regularization = params['regularization']
+    iterations = params['iterations']
+
+    log.info(params)
+    log.info("Size of product_train: {}".format(product_train.shape))
+    log.info("Size of product_test: {}".format(product_test.shape))
+    log.info("Size of user_vecs: {}".format(len(user_vecs)))
+    log.info("Size of item_vecs: {}".format(len(item_vecs)))
 
     model = implicit.als.AlternatingLeastSquares(factors=factors,
                                         regularization=regularization,

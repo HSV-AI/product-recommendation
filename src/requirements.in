@@ -18,4 +18,4 @@ awscli
 scikit-learn
 matplotlib
 tabulate
-git+https://github.com/benfred/implicit.git@main
+implicit

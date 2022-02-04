@@ -18,11 +18,13 @@ def train_implicit(product_train: scipy.sparse.csr_matrix, params: Dict) -> Any:
 
     model = implicit.als.AlternatingLeastSquares(factors=factors,
                                         regularization=regularization,
-                                        iterations=iterations)
+                                        iterations=iterations, )
 
     model.fit((product_train * alpha).astype('double'))
 
+    model = model.to_cpu()
     user_vecs = model.user_factors
     item_vecs = model.item_factors
 
+    print(type(user_vecs))
     return [user_vecs, item_vecs, product_train*alpha]
