@@ -24,8 +24,10 @@ def train_implicit(product_train: scipy.sparse.csr_matrix, params: Dict) -> Any:
                                         random_state=seed )
 
     model.fit((product_train * alpha).astype('double'))
-
-    model = model.to_cpu()
+    
+    if implicit.gpu.HAS_CUDA:
+        model = model.to_cpu()
+    
     user_vecs = model.user_factors
     item_vecs = model.item_factors
 
