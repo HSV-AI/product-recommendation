@@ -234,8 +234,8 @@ def create_implicit_pipeline(**kwargs):
         [
             node(
                 split_data,
-                "transactions",
-                ["train", "test", "products_altered", "transactions_altered"],
+                ["transactions", "parameters"],
+                ["train", "test"],
                 name="split_data"
             ),
             node(
@@ -246,7 +246,7 @@ def create_implicit_pipeline(**kwargs):
             ),
             node(
                 score_auc,
-                ["train", "test", "products_altered", 
+                ["train", "test",
                     "user_factors", "item_factors", "parameters"],
                 "score",
                 name="score_implicit"

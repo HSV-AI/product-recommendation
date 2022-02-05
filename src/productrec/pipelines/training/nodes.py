@@ -15,10 +15,13 @@ def train_implicit(product_train: scipy.sparse.csr_matrix, params: Dict) -> Any:
     factors = params['factors']
     regularization = params['regularization']
     iterations = params['iterations']
+    seed = params.get("seed", 42)
 
     model = implicit.als.AlternatingLeastSquares(factors=factors,
                                         regularization=regularization,
-                                        iterations=iterations, )
+                                        iterations=iterations, 
+                                        calculate_training_loss=True,
+                                        random_state=seed )
 
     model.fit((product_train * alpha).astype('double'))
 
@@ -26,5 +29,4 @@ def train_implicit(product_train: scipy.sparse.csr_matrix, params: Dict) -> Any:
     user_vecs = model.user_factors
     item_vecs = model.item_factors
 
-    print(type(user_vecs))
     return [user_vecs, item_vecs, product_train*alpha]
