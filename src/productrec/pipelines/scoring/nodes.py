@@ -6,85 +6,193 @@ import implicit
 import scipy
 from sklearn import metrics
 import logging
+from scipy.sparse import coo_matrix, csr_matrix
+from tqdm.auto import tqdm
 
-def auc_score(predictions, test):
-    '''
-    This simple function will output the area under the curve using sklearn's metrics. 
-    
-    parameters:
-    
-    - predictions: your prediction output
-    
-    - test: the actual target result you are comparing to
-    
-    returns:
-    
-    - AUC (area under the Receiver Operating Characterisic curve)
-    '''
-    fpr, tpr, thresholds = metrics.roc_curve(test, predictions)
-    return metrics.auc(fpr, tpr)   
+def ranking_metrics_at_k(model, train_user_items, test_user_items, K=10, show_progress=True, num_threads=1):
+    """ Calculates ranking metrics for a given trained model
 
-def calc_mean_auc(training_set, altered_users, predictions, test_set):
-    '''
-    This function will calculate the mean AUC by user for any user that had their user-item matrix altered. 
-    
-    parameters:
-    
-    training_set - The training set resulting from make_train, where a certain percentage of the original
-    user/item interactions are reset to zero to hide them from the model 
-    
-    predictions - The matrix of your predicted ratings for each user/item pair as output from the implicit MF.
-    These should be stored in a list, with user vectors as item zero and item vectors as item one. 
-    
-    altered_users - The indices of the users where at least one user/item pair was altered from make_train function
-    
-    test_set - The test set constucted earlier from make_train function
-    
-    
-    
-    returns:
-    
-    The mean AUC (area under the Receiver Operator Characteristic curve) of the test set only on user-item interactions
-    there were originally zero to test ranking ability in addition to the most popular items as a benchmark.
-    '''
+    Parameters
+    ----------
+    model : RecommenderBase
+        The fitted recommendation model to test
+    train_user_items : csr_matrix
+        Sparse matrix of user by item that contains elements that were used
+            in training the model
+    test_user_items : csr_matrix
+        Sparse matrix of user by item that contains withheld elements to
+        test on
+    K : int
+        Number of items to test on
+    show_progress : bool, optional
+        Whether to show a progress bar
+    num_threads : int, optional
+        The number of threads to use for testing. Specifying 0 means to default
+        to the number of cores on the machine. Note: aside from the ALS and BPR
+        models, setting this to more than 1 will likely hurt performance rather than
+        help.
+
+    Returns
+    -------
+    float
+        the calculated p@k
+    """
+
+    if not isinstance(train_user_items, csr_matrix):
+        train_user_items = train_user_items.tocsr()
+
+    if not isinstance(test_user_items, csr_matrix):
+        test_user_items = test_user_items.tocsr()
+
+    total = scipy.sparse.vstack((train_user_items,test_user_items))  # NOT np.vstack
+    popular_items = np.array(total.sum(axis = 0)).reshape(-1) # Get sum of item iteractions to find most popular
+
+    users = test_user_items.shape[0]
+    items = test_user_items.shape[1]
+
+    # precision
+    relevant = 0.0
+    pr_div = 0.0
+    total = 0.0
+
+    # map
+    mean_ap = 0.0
+    ap = 0.0
+    # ndcg
+    cg = (1.0 / np.log2(np.arange(2, K + 2)))
+    cg_sum = np.cumsum(cg)
+    ndcg = 0, 
+    # idcg
+    # auc
+    mean_auc = 0 #, auc, hit, miss, num_pos_items, num_neg_items
+    mean_pop_auc = 0
+    test_indptr = test_user_items.indptr
+    test_indices = test_user_items.indices
+
+
+    batch_size = 1000
+    start_idx = 0
+
+    # get an array of userids that have at least one item in the test set
+    to_generate = np.arange(users, dtype="int32")
+    to_generate = to_generate[np.ediff1d(test_user_items.indptr) > 0]
+
+    progress = tqdm(total=len(to_generate), disable=not show_progress)
+
+    while start_idx < len(to_generate):
+        batch = to_generate[start_idx: start_idx + batch_size]
+        ids, _ = model.recommend(batch, train_user_items[batch], N=K)
+        start_idx += batch_size
+
+        for batch_idx in range(len(batch)):
+            u = batch[batch_idx]
+            likes = []
+            for i in range(test_indptr[u], test_indptr[u+1]):
+                likes.append(test_indices[i])
+
+            pr_div += min(K, len(likes))
+            ap = 0
+            pop_ap = 0
+            hit = 0
+            pop_hit = 0
+            miss = 0
+            pop_miss = 0
+            auc = 0
+            pop_auc = 0
+            idcg = cg_sum[min(K, len(likes)) - 1]
+            num_pos_items = len(likes)
+            num_neg_items = items - num_pos_items
+
+            likes = np.array(likes, dtype="int32")
+            for i in range(K):
+                if ids[batch_idx, i] in likes:
+                    relevant += 1
+                    hit += 1
+                    ap += hit / (i + 1)
+                    ndcg += cg[i] / idcg
+                else:
+                    miss += 1
+                    auc += hit
+
+                if popular_items[i] in likes:
+                    pop_hit += 1
+                    pop_ap += pop_hit / (i + 1)
+                else:
+                    pop_miss += 1
+                    pop_auc += pop_hit
+
+            auc += ((hit + num_pos_items) / 2.0) * (num_neg_items - miss)
+            pop_auc += ((pop_hit + num_pos_items) / 2.0) * (num_neg_items - pop_miss)
+            mean_ap += ap / min(K, len(likes))
+            mean_auc += auc / (num_pos_items * num_neg_items)
+            mean_pop_auc += pop_auc / (num_pos_items * num_neg_items)
+            total += 1
+
+        progress.update(len(batch))
+
+    progress.close()
+    return {
+        "precision": relevant / pr_div,
+        "map": mean_ap / total,
+        # TODO - fiture out why this is not working with brazilian dataset
+        # "ndcg": ndcg / total,
+        "auc": mean_auc / total,
+        "pop_auc": mean_pop_auc / total
+    }
+
+
+def score_confusion(
+                product_train: scipy.sparse.csr_matrix, 
+                product_test: scipy.sparse.csr_matrix, 
+                user_vecs: List, 
+                item_vecs: List, 
+                params: Dict) -> Dict:
+
     log = logging.getLogger(__name__)
 
-    log.info("predictions: {}".format(predictions))
+    factors = params['factors']
+    regularization = params['regularization']
+    iterations = params['iterations']
 
-    store_auc = [] # An empty list to store the AUC for each user that had an item removed from the training set
-    popularity_auc = [] # To store popular AUC scores
-    pop_items = np.array(test_set.sum(axis = 0)).reshape(-1) # Get sum of item iteractions to find most popular
-    item_vecs = predictions[1]
-    for user in altered_users: # Iterate through each user that had an item altered
-        log.info("User: {}".format(user))
-        training_row = training_set[user,:].toarray().reshape(-1) # Get the training set row
-        log.info("Training row: {}".format(len(training_row)))
+    log.info(params)
+    log.info("Size of product_train: {}".format(product_train.shape))
+    log.info("Size of product_test: {}".format(product_test.shape))
+    log.info("Size of user_vecs: {}".format(len(user_vecs)))
+    log.info("Size of item_vecs: {}".format(len(item_vecs)))
 
-        zero_inds = np.where(training_row == 0) # Find where the interaction had not yet occurred
+    model = implicit.als.AlternatingLeastSquares(factors=factors,
+                                        regularization=regularization,
+                                        iterations=iterations, use_gpu=False)
 
-        log.info("Zero indices: {}".format(len(zero_inds[0])))
+    start_new = len(user_vecs)
 
-        # Get the predicted values based on our user/item vectors
-        user_vec = predictions[0][user,:]
+    model.user_factors = user_vecs
+    model.item_factors = item_vecs
 
-        log.info("User vector: {}".format(user_vec.shape))
+    total = scipy.sparse.vstack((product_train,product_test))  # NOT np.vstack
+    popular_items = np.array(total.sum(axis = 0)).reshape(-1) # Get sum of item iteractions to find most popular
 
-        pred = user_vec.dot(item_vecs).toarray()[0,zero_inds[0]].reshape(-1)
+    transactions = product_test.shape[0]
+    items = product_test.shape[1]
 
-        log.info("Predictions: {}".format(pred.shape))
+    log.info(transactions)
+    log.info(items)
 
-        # Get only the items that were originally zero
-        # Select all ratings from the MF prediction for this user that originally had no iteraction
-        actual = test_set[user,:].toarray()[0,zero_inds].reshape(-1) 
-        # Select the binarized yes/no interaction pairs from the original full data
-        # that align with the same pairs in training 
-        pop = pop_items[zero_inds] # Get the item popularity for our chosen items
-        store_auc.append(auc_score(pred, actual)) # Calculate AUC for the given user and store
-        popularity_auc.append(auc_score(pop, actual)) # Calculate AUC using most popular and score
-    # End users iteration
-    
-    return np.mean(store_auc), np.mean(popularity_auc)  
-   # Return the mean AUC rounded to three decimal places for both test and popularity benchmark
+    for transaction in range(transactions):
+        purchases = []
+        for i in range(product_test.indptr[198], product_test.indptr[199]):
+            purchases.append(product_test.indices[i])
+        
+        model.partial_fit_users([start_new], product_test.getrow(transaction))
+        start_new += 1
+                # model.recommend()
+    # for i in range(users):
+    #     log.info("Index: {} - Size: {}".format(i,product_test.indptr[i+1] - product_test.indptr[i]))
+
+
+    return {
+        "precision": 1
+    }
 
 def score_auc(
                 product_train: scipy.sparse.csr_matrix, 
@@ -95,28 +203,25 @@ def score_auc(
 
     log = logging.getLogger(__name__)
 
-    # factors = params['factors']
-    # regularization = params['regularization']
-    # iterations = params['iterations']
+    factors = params['factors']
+    regularization = params['regularization']
+    iterations = params['iterations']
 
-    # log.info(params)
-    # log.info("Size of product_train: {}".format(product_train.shape))
-    # log.info("Size of product_test: {}".format(product_test.shape))
-    # log.info("Size of user_vecs: {}".format(len(user_vecs)))
-    # log.info("Size of item_vecs: {}".format(len(item_vecs)))
+    log.info(params)
+    log.info("Size of product_train: {}".format(product_train.shape))
+    log.info("Size of product_test: {}".format(product_test.shape))
+    log.info("Size of user_vecs: {}".format(len(user_vecs)))
+    log.info("Size of item_vecs: {}".format(len(item_vecs)))
 
-    # model = implicit.als.AlternatingLeastSquares(factors=factors,
-    #                                     regularization=regularization,
-    #                                     iterations=iterations)
+    model = implicit.als.AlternatingLeastSquares(factors=factors,
+                                        regularization=regularization,
+                                        iterations=iterations, use_gpu=False)
 
-    # model.user_factors = user_vecs
-    # model.item_factors = item_vecs
+    model.user_factors = user_vecs
+    model.item_factors = item_vecs
 
-    # test, popular = calc_mean_auc(product_train, products_altered, 
-    #           [scipy.sparse.csr_matrix(item_vecs), scipy.sparse.csr_matrix(user_vecs.T)], product_test)
+    results = ranking_metrics_at_k(model, product_train, product_test, K=10, show_progress=True, num_threads=1)
 
+    log.info(results)
 
-    # print('Our model scored',test,'versus a score of',popular,'if we always recommended the most popular item.')
-
-    # return { 'test': test, 'popular': popular }
-    return { 'test': 1, 'popular': 1 }
+    return { 'test': results['auc'], 'popular': 1 }

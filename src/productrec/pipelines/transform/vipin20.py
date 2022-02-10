@@ -1,7 +1,6 @@
 from typing import Any, Dict, List
 
 import pandas as pd
-import numpy as np
 
 def transform_vipin20(transactions: pd.DataFrame) -> List[pd.DataFrame]:
     transactions = transactions[(transactions.NumberOfItemsPurchased > 0) & (transactions.CostPerItem > 0)]

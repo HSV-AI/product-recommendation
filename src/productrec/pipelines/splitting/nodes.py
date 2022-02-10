@@ -24,12 +24,12 @@ def split_data(transactions: pd.DataFrame, params: Dict) -> Any:
     item_list = list(transactions.product_id.unique()) # Get our unique products that were purchased
     quantity_list = list(transactions.quantity) # All of our purchases
 
-    cols = transactions.order_id.astype(CategoricalDtype(categories=transaction_list, ordered=True)).cat.codes 
+    rows = transactions.order_id.astype(CategoricalDtype(categories=transaction_list, ordered=True)).cat.codes 
     # Get the associated row indices
-    rows = transactions.product_id.astype(CategoricalDtype(categories=item_list, ordered=True)).cat.codes 
+    cols = transactions.product_id.astype(CategoricalDtype(categories=item_list, ordered=True)).cat.codes 
     # Get the associated column indices
-    purchases_sparse = scipy.sparse.csr_matrix((quantity_list, (rows, cols)), shape=(len(item_list), len(transaction_list)))
+    purchases_sparse = scipy.sparse.csr_matrix((quantity_list, (rows, cols)), shape=(len(transaction_list), len(item_list)))
 
-    train, test = train_test_split(purchases_sparse, test_size=0.2, random_state=seed) # Split the data into training and test sets
+    train, test = train_test_split(purchases_sparse, test_size=test_size, random_state=seed) # Split the data into training and test sets
 
     return [train, test]
