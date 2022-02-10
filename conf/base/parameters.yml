@@ -24,3 +24,5 @@ minimum_order_size: 2
 
 # maximum order size
 maximum_order_size: 2000
+
+wandb_project: id_of_project
