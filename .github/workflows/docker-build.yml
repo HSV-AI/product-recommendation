@@ -31,4 +31,4 @@ jobs:
           context: .
           file: Dockerfile
           push: true
-          tags: jperiodlangley/hsv-ai:product-rec
+          tags: hsvai/product-rec:train
