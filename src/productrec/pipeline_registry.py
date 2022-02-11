@@ -12,15 +12,15 @@ def register_pipelines() -> Dict[str, Pipeline]:
         A mapping from a pipeline name to a ``Pipeline`` object.
 
     """
-    vipin20_pipeline = pipes.create_vipin20_pipeline()
     implicit_pipeline = pipes.create_implicit_pipeline()
-    electronics_pipeline = pipes.create_electronics_pipeline()
-    brazilian_pipeine = pipes.create_brazilian_pipeline()
-    ecommerce_pipeline = pipes.create_ecommerce_pipeline()
-    jewelry_pipeline = pipes.create_jewelry_pipeline()
-    journey_pipelie = pipes.create_journey_pipeline()
-    retailrocket_pipeline = pipes.create_retailrocket_pipeline()
-    instacart_pipeline = pipes.create_instacart_pipeline()
+    vipin20_pipeline = pipes.create_vipin20_pipeline() + implicit_pipeline
+    electronics_pipeline = pipes.create_electronics_pipeline() + implicit_pipeline
+    brazilian_pipeine = pipes.create_brazilian_pipeline() + implicit_pipeline
+    ecommerce_pipeline = pipes.create_ecommerce_pipeline() + implicit_pipeline
+    jewelry_pipeline = pipes.create_jewelry_pipeline() + implicit_pipeline
+    journey_pipelie = pipes.create_journey_pipeline() + implicit_pipeline
+    retailrocket_pipeline = pipes.create_retailrocket_pipeline() + implicit_pipeline
+    instacart_pipeline = pipes.create_instacart_pipeline() + implicit_pipeline
 
     return {
         "vipin20": vipin20_pipeline,
@@ -32,5 +32,5 @@ def register_pipelines() -> Dict[str, Pipeline]:
         "retailrocket": retailrocket_pipeline,
         "instacart": instacart_pipeline,
         "implicit": implicit_pipeline,
-        "__default__": vipin20_pipeline + implicit_pipeline
+        "__default__": vipin20_pipeline
     }
