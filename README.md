@@ -1,7 +1,6 @@
 ![Training Pipeline](https://github.com/HSV-AI/product-recommendation/actions/workflows/python-app.yml/badge.svg)
 ![Docker Pipeline](https://github.com/HSV-AI/product-recommendation/actions/workflows/docker-build.yml/badge.svg)
 
-/runs/1860359368/workflow
 # Product Recommendation
 
 This project consists of investigations of product recommendation approaches and open datasets. The intent is to focus on implicit datasets with very limited knowledge of a user's past history or preferences.
