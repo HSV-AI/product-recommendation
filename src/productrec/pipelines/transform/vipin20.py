@@ -2,7 +2,8 @@ from typing import Any, Dict, List
 
 import pandas as pd
 
-def transform_vipin20(transactions: pd.DataFrame) -> List[pd.DataFrame]:
+def transform_vipin20(transactions: pd.DataFrame, params: Dict) -> List[pd.DataFrame]:
+
     transactions = transactions[(transactions.NumberOfItemsPurchased > 0) & (transactions.CostPerItem > 0)]
     
     renamed_df = transactions.rename(columns={"TransactionId": "order_id", 

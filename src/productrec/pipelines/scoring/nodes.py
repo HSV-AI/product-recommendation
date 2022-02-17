@@ -178,9 +178,10 @@ def score_confusion(
     log.info(transactions)
     log.info(items)
 
+    # TODO - NEED TO FIND A BETTER WAY TO CALCULATE FOR NEW ORDERS
     for transaction in range(transactions):
         purchases = []
-        for i in range(product_test.indptr[198], product_test.indptr[199]):
+        for i in range(product_test.indptr[1], product_test.indptr[2]):
             purchases.append(product_test.indices[i])
         
         model.partial_fit_users([start_new], product_test.getrow(transaction))

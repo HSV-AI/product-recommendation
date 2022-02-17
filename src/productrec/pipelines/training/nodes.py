@@ -20,10 +20,9 @@ def train_implicit(product_train: scipy.sparse.csr_matrix, params: Dict) -> Any:
     model = implicit.als.AlternatingLeastSquares(factors=factors,
                                         regularization=regularization,
                                         iterations=iterations, 
-                                        calculate_training_loss=True,
                                         random_state=seed )
 
-    model.fit((product_train * alpha).astype('double'))
+    model.fit((product_train * alpha).astype('double'), show_progress=False)
     
     if implicit.gpu.HAS_CUDA:
         model = model.to_cpu()

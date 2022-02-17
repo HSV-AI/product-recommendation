@@ -96,7 +96,7 @@ def create_vipin20_pipeline(**kwargs):
         [
             node(
                 transform_vipin20,
-                "vipin20_kaggle_data",
+                ["vipin20_kaggle_data", "parameters"],
                 ["transactions", "products"],
                 name="transform_vipin20"
             ),
