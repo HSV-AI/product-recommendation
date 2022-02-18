@@ -4,52 +4,7 @@
 electronics_kaggle_data:
   type: pandas.CSVDataSet
   filepath: s3://hsv-ai/product-recommendation/data/01_raw/electronics/kz.csv
-
-electronics_transactions:
-  type: pandas.CSVDataSet
-  filepath: data/03_primary/electronics/transactions.csv
-
-electronics_products:
-  type: pandas.CSVDataSet
-  filepath: data/03_primary/electronics/products.csv
-
-electronics_train:
-  type: pickle.PickleDataSet
-  filepath: data/05_model_input/electronics/train.pkl
-  backend: pickle
-
-electronics_test:
-  type: pickle.PickleDataSet
-  filepath: data/05_model_input/electronics/test.pkl
-  backend: pickle
-
-electronics_products_altered:
-  type: pickle.PickleDataSet
-  filepath: data/05_model_input/electronics/products_altered.pkl
-  backend: pickle
-
-electronics_transactions_altered:
-  type: pickle.PickleDataSet
-  filepath: data/05_model_input/electronics/transactions_altered.pkl
-  backend: pickle
-
 electronics_hyperparameters:
   type: json.JSONDataSet
   filepath: s3://hsv-ai/product-recommendation/data/05_model_input/electronics/hyperparameters.json
-
-electronics_user_factors:
-  type: pickle.PickleDataSet
-  filepath: data/06_models/electronics/user_factors.pkl
-
-electronics_item_factors:
-  type: pickle.PickleDataSet
-  filepath: data/06_models/electronics/item_factors.pkl
-
-electronics_product_train:
-  type: pickle.PickleDataSet
-  filepath: data/06_models/electronics/product_train.pkl
-
-electronics_score:
-  type: json.JSONDataSet
-  filepath: data/08_reporting/electronics/auc_score.json
 

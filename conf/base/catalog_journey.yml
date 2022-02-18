@@ -9,51 +9,7 @@ journey_kaggle_product_data:
   type: pandas.CSVDataSet
   filepath: s3://hsv-ai/product-recommendation/data/01_raw/journey/product.csv
 
-journey_transactions:
-  type: pandas.CSVDataSet
-  filepath: data/03_primary/journey/transactions.csv
-
-journey_products:
-  type: pandas.CSVDataSet
-  filepath: data/03_primary/journey/products.csv
-
-journey_train:
-  type: pickle.PickleDataSet
-  filepath: data/05_model_input/journey/train.pkl
-  backend: pickle
-
-journey_test:
-  type: pickle.PickleDataSet
-  filepath: data/05_model_input/journey/test.pkl
-  backend: pickle
-
-journey_products_altered:
-  type: pickle.PickleDataSet
-  filepath: data/05_model_input/journey/products_altered.pkl
-  backend: pickle
-
-journey_transactions_altered:
-  type: pickle.PickleDataSet
-  filepath: data/05_model_input/journey/transactions_altered.pkl
-  backend: pickle
-
 journey_hyperparameters:
   type: json.JSONDataSet
   filepath: s3://hsv-ai/product-recommendation/data/05_model_input/journey/hyperparameters.json
-
-journey_user_factors:
-  type: pickle.PickleDataSet
-  filepath: data/06_models/journey/user_factors.pkl
-
-journey_item_factors:
-  type: pickle.PickleDataSet
-  filepath: data/06_models/journey/item_factors.pkl
-
-journey_product_train:
-  type: pickle.PickleDataSet
-  filepath: data/06_models/journey/product_train.pkl
-
-journey_score:
-  type: json.JSONDataSet
-  filepath: data/08_reporting/journey/auc_score.json
 
