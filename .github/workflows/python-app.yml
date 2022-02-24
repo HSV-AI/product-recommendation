@@ -25,9 +25,9 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
       run: |
         kedro run --pipeline vipin20
-        kedro run --pipeline electronics
-        kedro run --pipeline brazilian
-        kedro run --pipeline ecommerce
-        kedro run --pipeline jewelry
-        kedro run --pipeline journey
-        kedro run --pipeline retailrocket
+        # kedro run --pipeline electronics
+        # kedro run --pipeline brazilian
+        # kedro run --pipeline ecommerce
+        # kedro run --pipeline jewelry
+        # kedro run --pipeline journey
+        # kedro run --pipeline retailrocket
