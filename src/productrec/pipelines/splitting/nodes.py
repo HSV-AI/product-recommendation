@@ -13,12 +13,12 @@ import logging
 
 def split_data(transactions: pd.DataFrame, params: Dict) -> Any:
 
-    logging.getLogger(__name__)
+    log = logging.getLogger(__name__)
 
     seed = params.get("seed", 42)
     test_size = params.get("test_size", 0.2)
 
-    logging.info("Splitting data based on a seed of {} and test_size of {}".format(seed, test_size))
+    log.info("Splitting data based on a seed of {} and test_size of {}".format(seed, test_size))
 
     transaction_list = list(np.sort(transactions.order_id.unique())) # Get our unique customers
     item_list = list(transactions.product_id.unique()) # Get our unique products that were purchased
@@ -29,6 +29,10 @@ def split_data(transactions: pd.DataFrame, params: Dict) -> Any:
     cols = transactions.product_id.astype(CategoricalDtype(categories=item_list, ordered=True)).cat.codes 
     # Get the associated column indices
     purchases_sparse = scipy.sparse.csr_matrix((quantity_list, (rows, cols)), shape=(len(transaction_list), len(item_list)))
+    log.info('Original purchases matrix shape: {}'.format(purchases_sparse.shape))
+    purchases_sparse[purchases_sparse != 0] = 1 # Store the test set as a binary preference matrix
+    purchases_sparse.sum_duplicates()
+    log.info("Purchase matrix shape after summing duplicates: {}".format(purchases_sparse.shape))
 
     train, test = train_test_split(purchases_sparse, test_size=test_size, random_state=seed) # Split the data into training and test sets
 

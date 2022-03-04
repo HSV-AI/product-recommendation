@@ -14,10 +14,7 @@ from .transform import (
 from .cleaning import clean_data
 from .splitting import split_data
 from .training import train_implicit
-from .scoring import (
-    score_auc,
-    score_confusion
-) 
+from .scoring import score_confusion 
 
 def create_electronics_pipeline(**kwargs):
     return Pipeline(
