@@ -26,8 +26,8 @@ jobs:
         WANDB_API_KEY: ${{secrets.WANDB_API_KEY}}
       run: |
         kedro run --env vipin20 --pipeline vipin20
-        kedro run --env vipin20 --pipeline brazilian
-        kedro run --env vipin20 --pipeline ecommerce
-        kedro run --env vipin20 --pipeline jewelry
-        kedro run --env vipin20 --pipeline journey
-        kedro run --env vipin20 --pipeline retailrocket
+        kedro run --env brazilian --pipeline brazilian
+        kedro run --env ecommerce --pipeline ecommerce
+        kedro run --env jewelry --pipeline jewelry
+        kedro run --env journey --pipeline journey
+        kedro run --env retailrocket --pipeline retailrocket
