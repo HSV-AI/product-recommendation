@@ -23,11 +23,11 @@ jobs:
       env:
         AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
         AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+        WANDB_API_KEY: ${{secrets.WANDB_API_KEY}}
       run: |
-        kedro run --pipeline vipin20
-        kedro run --pipeline electronics
-        kedro run --pipeline brazilian
-        kedro run --pipeline ecommerce
-        kedro run --pipeline jewelry
-        kedro run --pipeline journey
-        kedro run --pipeline retailrocket
+        kedro run --env vipin20 --pipeline vipin20
+        kedro run --env vipin20 --pipeline brazilian
+        kedro run --env vipin20 --pipeline ecommerce
+        kedro run --env vipin20 --pipeline jewelry
+        kedro run --env vipin20 --pipeline journey
+        kedro run --env vipin20 --pipeline retailrocket

@@ -16,3 +16,4 @@ scikit-learn
 matplotlib
 tabulate
 implicit==0.5.2
+wandb
