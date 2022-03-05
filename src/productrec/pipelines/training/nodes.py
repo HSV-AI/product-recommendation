@@ -33,6 +33,9 @@ def train_implicit(product_train: scipy.sparse.csr_matrix, params: Dict) -> Any:
     
     if implicit.gpu.HAS_CUDA:
         model = model.to_cpu()
+        wandb.log({"gpu": True})
+    else:
+        wandb.log({"gpu": False})
     
     user_vecs = model.user_factors
     item_vecs = model.item_factors

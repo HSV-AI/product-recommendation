@@ -29,5 +29,12 @@ jobs:
         kedro run --env brazilian --pipeline brazilian
         kedro run --env ecommerce --pipeline ecommerce
         kedro run --env jewelry --pipeline jewelry
-        kedro run --env journey --pipeline journey
-        kedro run --env retailrocket --pipeline retailrocket
+
+#        // Something wrong with retail rocket
+#        kedro run --env retailrocket --pipeline retailrocket
+#        
+#        // Too sparse to be useful
+#        kedro run --env journey --pipeline journey
+#
+#        // Too sparse and takes a very long time
+#        kedro run --env electronics --pipeline electronics
