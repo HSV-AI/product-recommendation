@@ -5,7 +5,7 @@ seed: 42
 alpha: 1
 
 # number of latent factors to calculate for each order
-factors: 64
+factors: 512
 
 # regularization to pass to the ALS algorithm
 regularization: 0.02
@@ -25,4 +25,4 @@ minimum_order_size: 2
 # maximum order size
 maximum_order_size: 2000
 
-wandb_project: implicit-project
+wandb_project: vipin20

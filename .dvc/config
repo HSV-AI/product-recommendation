@@ -1,5 +1,0 @@
-[core]
-    remote = hsv-remote
-['remote "hsv-remote"']
-    url = s3://hsv-ai/dvc/remote/product-recommendation
-    endpointurl = https://minio.etheredge.co

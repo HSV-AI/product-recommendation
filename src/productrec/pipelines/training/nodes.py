@@ -8,6 +8,8 @@ import implicit
 import scipy
 from sklearn import metrics
 from pandas.api.types import CategoricalDtype
+import time
+import wandb
 
 def train_implicit(product_train: scipy.sparse.csr_matrix, params: Dict) -> Any:
 
@@ -22,10 +24,18 @@ def train_implicit(product_train: scipy.sparse.csr_matrix, params: Dict) -> Any:
                                         iterations=iterations, 
                                         random_state=seed )
 
+
+    start = time.perf_counter()
     model.fit((product_train * alpha).astype('double'), show_progress=False)
+    duration = time.perf_counter() - start
+
+    wandb.log({"train_time": duration})
     
     if implicit.gpu.HAS_CUDA:
         model = model.to_cpu()
+        wandb.log({"gpu": True})
+    else:
+        wandb.log({"gpu": False})
     
     user_vecs = model.user_factors
     item_vecs = model.item_factors

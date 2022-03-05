@@ -8,7 +8,8 @@ import scipy
 from sklearn import metrics
 import logging
 from scipy.sparse import coo_matrix, csr_matrix
-from tqdm.auto import tqdm
+import wandb
+import time
 
 def score_confusion(
                 product_train: scipy.sparse.csr_matrix, 
@@ -38,8 +39,14 @@ def score_confusion(
     model.user_factors = user_vecs
     model.item_factors = item_vecs
 
+    start = time.perf_counter()
     score = score_model(model, product_test, test_size=0.1, seed=seed)
+    duration = time.perf_counter() - start
+
     log.info("Score: {}".format(score))
+    wandb.log(score)
+    wandb.log({"score_time": duration})
+
     return score
     
 def score_model(model, test_orders, test_size=0.1, seed=42):

@@ -3,10 +3,17 @@ from typing import Any, Dict, List
 import pandas as pd
 import numpy as np
 import logging
+import wandb
 
 def clean_data(transactions: pd.DataFrame, params: Dict) -> pd.DataFrame:
 
     log = logging.getLogger(__name__)
+
+    wandb.init(
+        project=params["wandb_project"],
+        notes="implicit_pipeline",
+        config=params,
+    )
 
     filter_value = params.get("filter_value", 2)
     minimum_order_size = params.get("minimum_order_size", 5)
@@ -49,6 +56,9 @@ def clean_data(transactions: pd.DataFrame, params: Dict) -> pd.DataFrame:
     log.info("Number of orders: {}, number of items: {}".format(num_orders, num_items))
     print(f'matrix sparsity: {sparsity:f}')
     log.info("Matrix sparsity: {}".format(sparsity))
+    
+    # Log to wandb
+    wandb.log({"sparsity": sparsity})
 
     filtered_df['product_id'] = filtered_df['product_id'].astype(str)
     filtered_df['order_id'] = filtered_df['order_id'].astype(str)

@@ -19,15 +19,22 @@ jobs:
     steps:
     - name: Checkout Code
       uses: actions/checkout@v2
-    - name: Run Vipin20 Pipeline
+    - name: Run Pipelines
       env:
         AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
         AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+        WANDB_API_KEY: ${{secrets.WANDB_API_KEY}}
       run: |
-        kedro run --pipeline vipin20
-        kedro run --pipeline electronics
-        kedro run --pipeline brazilian
-        kedro run --pipeline ecommerce
-        kedro run --pipeline jewelry
-        kedro run --pipeline journey
-        kedro run --pipeline retailrocket
+        kedro run --env vipin20 --pipeline vipin20
+        kedro run --env brazilian --pipeline brazilian
+        kedro run --env ecommerce --pipeline ecommerce
+        kedro run --env jewelry --pipeline jewelry
+
+#        // Something wrong with retail rocket
+#        kedro run --env retailrocket --pipeline retailrocket
+#        
+#        // Too sparse to be useful
+#        kedro run --env journey --pipeline journey
+#
+#        // Too sparse and takes a very long time
+#        kedro run --env electronics --pipeline electronics
