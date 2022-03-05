@@ -19,6 +19,14 @@ export AWS_ACCESS_KEY_ID=<your key ID here>
 export AWS_SECRET_ACCESS_KEY=<your secret key here>
 ```
 
+# Weights and Biases Configuration
+
+This repository is set up to use Weights and Biases (W&B) for logging metrics. To use W&B, you will need to export your W&B API key in your environment. The best way to do this is to create a .env file at the root of the repository and add your information to that file. The .env file is ignored (based on the .gitignore file) and will not be uploaded to the repository.
+
+```
+export WANDB_API_KEY=<your W&B API key here>
+```
+
 # Running
 
 To check for a correct kedro installation, run
@@ -33,6 +41,8 @@ To get a list of pipelines available to run:
 ?>kedro pipeline list
 ```
 
+Each dataset is defined in a separate config directory for its catalog and parameters. To run a pipeline, run
+
 ```
-?>kedro run --pipeline pipeline_name
+?>kedro run --env pipeline_name --pipeline pipeline_name
 ```
