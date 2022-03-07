@@ -9,4 +9,4 @@ def transform_retailrocket(events: pd.DataFrame) -> List[pd.DataFrame]:
     transactions['product_id'] = transactions.itemid.astype(str)
     transactions['quantity'] = 1
     transactions['price'] = 1
-    return transactions[["order_id", "product_id","quantity", "price"]]
+    return transactions[["order_id", "product_id", "customer_id", "quantity", "price"]]

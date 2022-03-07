@@ -19,5 +19,5 @@ def transform_brazilian(transactions: pd.DataFrame, products: pd.DataFrame, cust
     products["description"] = products["product_category_name"] + str(products["product_description_lenght"])
 
     products = products[["product_id", "description"]].drop_duplicates()
-    transactions = transactions[["order_id", "product_id", "price", "quantity"]]
+    transactions = transactions[["order_id", "product_id", "customer_id", "price", "quantity"]]
     return [ transactions, products ]
