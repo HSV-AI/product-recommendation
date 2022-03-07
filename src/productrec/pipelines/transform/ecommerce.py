@@ -7,6 +7,7 @@ def transform_ecommerce(transactions: pd.DataFrame) -> List[pd.DataFrame]:
     transactions = transactions[(transactions.UnitPrice > 0) & (transactions.Quantity > 0)]
 
     transactions['StockCode'] = transactions['StockCode'].astype(str)
+    transactions['CustomerID'] = transactions['CustomerID'].astype(str)
 
     item_lookup = transactions[['StockCode', 'Description']].drop_duplicates() # Only get unique item/description pairs
     item_lookup['StockCode'] = item_lookup.StockCode.astype(str) # Encode as strings for future lookup ease
@@ -14,10 +15,11 @@ def transform_ecommerce(transactions: pd.DataFrame) -> List[pd.DataFrame]:
     price_lookup = transactions[['StockCode', 'UnitPrice']].drop_duplicates()
     price_lookup['StockCode'] = price_lookup.StockCode.astype(str)
 
-    transactions = transactions[['InvoiceNo', 'StockCode', 'Quantity', 'UnitPrice', 'Description']]
+    transactions = transactions[['InvoiceNo', 'StockCode', 'CustomerID', 'Quantity', 'UnitPrice', 'Description']]
 
     renamed_df = transactions.rename(columns={"InvoiceNo": "order_id", 
                                 "StockCode": "product_id", 
+                                "CustomerID": "customer_id",
                                 "Description":"description",
                                 "Quantity":"quantity",
                                 "UnitPrice":"price"})
