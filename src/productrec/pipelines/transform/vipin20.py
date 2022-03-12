@@ -11,7 +11,7 @@ def transform_vipin20(transactions: pd.DataFrame, params: Dict) -> List[pd.DataF
                             "UserId": "customer_id",
                             "ItemDescription":"description",
                             "NumberOfItemsPurchased":"quantity",
-                            "CostPerItem":"price"})[['order_id', 'product_id', 'description', 'quantity']]
+                            "CostPerItem":"price"})[['order_id', 'product_id', 'customer_id', 'description', 'quantity']]
 
 
     item_lookup = transactions[['ItemCode', 'ItemDescription']].drop_duplicates() # Only get unique item/description pairs
