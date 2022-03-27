@@ -16,7 +16,7 @@ def report(transactions: pd.DataFrame, params: Dict) -> pd.DataFrame:
         config=params,
     )
 
-    user_counts = transactions[transactions['customer_id'] > 0] \
+    user_counts = transactions \
         .drop_duplicates(['customer_id', 'order_id']) \
         .groupby('customer_id')['order_id'] \
         .count() \
@@ -50,7 +50,7 @@ def report(transactions: pd.DataFrame, params: Dict) -> pd.DataFrame:
     fig1.gca().set_title("Breakdown of customers by order count")
     wandb.log({"customer_breakdown": wandb.Image(plt)})
 
-    product_counts = transactions[transactions['product_id'] > 0] \
+    product_counts = transactions \
         .groupby(transactions.product_id)['quantity'] \
         .agg('sum'). \
         sort_values(ascending=False)
