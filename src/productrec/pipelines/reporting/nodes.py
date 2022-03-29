@@ -42,7 +42,7 @@ def report(transactions: pd.DataFrame, params: Dict) -> pd.DataFrame:
     customer_table = wandb.Table(dataframe=user_df[:10])
     wandb.log({"top_10_customer_by_orders": customer_table})
 
-    plt.plot(user_counts) 
+    plt.plot(user_counts.values) 
     wandb.log({
         "orders_by_customers_plot": plt
     })
@@ -61,7 +61,7 @@ def report(transactions: pd.DataFrame, params: Dict) -> pd.DataFrame:
     product_table = wandb.Table(dataframe=product_df[:10])
     wandb.log({"top_10_product_by_orders": product_table})
 
-    plt.plot(product_counts) 
+    plt.plot(product_counts.values) 
     wandb.log({
         "products_by_orders_plot": plt
     })
@@ -89,8 +89,8 @@ def report(transactions: pd.DataFrame, params: Dict) -> pd.DataFrame:
     wandb.log({"customer_breakdown": wandb.Image(plt)})
 
     product_counts = transactions \
-        .groupby(transactions.product_id)['quantity'] \
-        .agg('sum'). \
+        .groupby(transactions.product_id)['order_id'] \
+        .count(). \
         sort_values(ascending=False)
 
     product_df = product_counts \
