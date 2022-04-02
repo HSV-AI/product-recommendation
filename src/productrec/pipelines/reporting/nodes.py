@@ -5,6 +5,8 @@ import numpy as np
 import logging
 import wandb
 from matplotlib import pyplot as plt
+from mlxtend.frequent_patterns import apriori, association_rules
+from mlxtend.preprocessing import TransactionEncoder
 
 def report(transactions: pd.DataFrame, params: Dict) -> pd.DataFrame:
 
@@ -122,3 +124,34 @@ def report(transactions: pd.DataFrame, params: Dict) -> pd.DataFrame:
     fig1.gca().set_title("Breakdown of products by order count")
     wandb.log({"product_breakdown": wandb.Image(plt)})
 
+    # Now for some mlxtend action
+    grouped = transactions.groupby('order_id').agg({"product_id": lambda x: list(x)})
+    temp = grouped['product_id'].values
+
+    te = TransactionEncoder()
+
+    oht_ary = te.fit(temp).transform(temp, sparse=True)
+    sparse_df = pd.DataFrame.sparse.from_spmatrix(oht_ary, columns=te.columns_)
+    sparse_df.columns = [str(i) for i in sparse_df.columns]
+    top_sets = apriori(sparse_df, min_support=0.012, use_colnames=True, verbose=1, max_len=5)
+    top_sets['length'] = top_sets['itemsets'].apply(lambda x: len(x))
+
+    set1 = top_sets[top_sets['length'] == 1].sort_values('support', ascending=False).reset_index()[:5]['support','itemsets']
+    support_table = wandb.Table(dataframe=set1)
+    wandb.log({"top_5_product_singles": support_table})
+
+    set2 = top_sets[top_sets['length'] == 2].sort_values('support', ascending=False).reset_index()[:5]['support','itemsets']
+    support_table = wandb.Table(dataframe=set2)
+    wandb.log({"top_5_product_pairs": support_table})
+
+    set3 = top_sets[top_sets['length'] == 3].sort_values('support', ascending=False).reset_index()[:5]['support','itemsets']
+    support_table = wandb.Table(dataframe=set3)
+    wandb.log({"top_5_product_triples": support_table})
+
+    set4 = top_sets[top_sets['length'] == 4].sort_values('support', ascending=False).reset_index()[:5]['support','itemsets']
+    support_table = wandb.Table(dataframe=set4)
+    wandb.log({"top_5_product_quads": support_table})
+
+    set5 = top_sets[top_sets['length'] == 5].sort_values('support', ascending=False).reset_index()[:5]['support','itemsets']
+    support_table = wandb.Table(dataframe=set5)
+    wandb.log({"top_5_product_quints": support_table})
