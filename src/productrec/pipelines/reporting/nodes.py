@@ -137,21 +137,26 @@ def report(transactions: pd.DataFrame, params: Dict) -> pd.DataFrame:
     top_sets['length'] = top_sets['itemsets'].apply(lambda x: len(x))
 
     set1 = top_sets[top_sets['length'] == 1].sort_values('support', ascending=False).reset_index()[:5][['support','itemsets']]
+    log.info(set1)
     support_table = wandb.Table(dataframe=set1)
     wandb.log({"top_5_product_singles": support_table})
 
     set2 = top_sets[top_sets['length'] == 2].sort_values('support', ascending=False).reset_index()[:5][['support','itemsets']]
+    log.info(set2)
     support_table = wandb.Table(dataframe=set2)
     wandb.log({"top_5_product_pairs": support_table})
 
     set3 = top_sets[top_sets['length'] == 3].sort_values('support', ascending=False).reset_index()[:5][['support','itemsets']]
+    log.info(set3)
     support_table = wandb.Table(dataframe=set3)
     wandb.log({"top_5_product_triples": support_table})
 
     set4 = top_sets[top_sets['length'] == 4].sort_values('support', ascending=False).reset_index()[:5][['support','itemsets']]
+    log.info(set4)
     support_table = wandb.Table(dataframe=set4)
     wandb.log({"top_5_product_quads": support_table})
 
     set5 = top_sets[top_sets['length'] == 5].sort_values('support', ascending=False).reset_index()[:5][['support','itemsets']]
+    log.info(set5)
     support_table = wandb.Table(dataframe=set5)
     wandb.log({"top_5_product_quints": support_table})
