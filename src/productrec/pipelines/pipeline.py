@@ -14,7 +14,8 @@ from .transform import (
 from .cleaning import clean_data
 from .splitting import split_data
 from .training import train_implicit
-from .scoring import score_confusion 
+from .scoring import score_confusion
+from .reporting import report
 
 def create_electronics_pipeline(**kwargs):
     return Pipeline(
@@ -115,6 +116,11 @@ def create_instacart_pipeline(**kwargs):
 def create_implicit_pipeline(**kwargs):
     return Pipeline(
         [
+            node(report,
+                ["transactions", "parameters"],
+                None,
+                name="report",
+            ),
             node(
                 clean_data,
                 ["transactions", "parameters"],

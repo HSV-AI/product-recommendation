@@ -10,6 +10,7 @@ from sklearn import metrics
 from sklearn.model_selection import train_test_split
 from pandas.api.types import CategoricalDtype
 import logging
+import wandb
 
 def split_data(transactions: pd.DataFrame, params: Dict) -> Any:
 
@@ -34,6 +35,10 @@ def split_data(transactions: pd.DataFrame, params: Dict) -> Any:
     purchases_sparse.sum_duplicates()
     log.info("Purchase matrix shape after summing duplicates: {}".format(purchases_sparse.shape))
 
+    plt.figure(figsize=(10, 10))
+    plt.spy(purchases_sparse, markersize=1, aspect='auto')
+    wandb.log({"Sparcity Plot": plt})
+    
     train, test = train_test_split(purchases_sparse, test_size=test_size, random_state=seed) # Split the data into training and test sets
 
     return [train, test]

@@ -7,6 +7,7 @@ jupyter_client
 jupyterlab
 kedro[all]==0.17.6
 kedro-viz
+mlxtend
 nbstripout
 pytest-cov
 pytest-mock

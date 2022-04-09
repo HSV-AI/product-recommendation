@@ -2,13 +2,13 @@
 seed: 42
 
 # alpha value to multiply the csr_matrix by before training the ALS
-alpha: 1
+alpha: 15
 
 # number of latent factors to calculate for each order
-factors: 64
+factors: 512
 
 # regularization to pass to the ALS algorithm
-regularization: 0.02
+regularization: 0.001
 
 # number of iterations to run the ALS algorithm
 iterations: 200
@@ -17,7 +17,7 @@ iterations: 200
 test_size: 0.1
 
 # number of orders that a product must appear in to be considered relevant
-filter_value: 10
+filter_value: 1
 
 # minimum size of an order (needs to be at least 2)
 minimum_order_size: 2
