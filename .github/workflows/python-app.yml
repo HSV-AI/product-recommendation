@@ -24,6 +24,7 @@ jobs:
         AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
         AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
         WANDB_API_KEY: ${{secrets.WANDB_API_KEY}}
+        REPO_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
       run: |
         kedro run --env vipin20 --pipeline vipin20
         kedro run --env brazilian --pipeline brazilian
