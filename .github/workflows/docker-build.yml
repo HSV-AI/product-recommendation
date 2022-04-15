@@ -31,4 +31,4 @@ jobs:
           context: .
           file: Dockerfile
           push: true
-          tags: hsvai/product-rec:train
+          tags: hsvai/product-rec:train-cpu

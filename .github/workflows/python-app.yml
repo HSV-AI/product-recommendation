@@ -34,7 +34,7 @@ jobs:
     runs-on: [self-hosted, cml-cpu]
     timeout-minutes: 4320 # 72h
     container:
-      image: hsvai/product-rec:train
+      image: hsvai/product-rec:train-cpu
       # options: --gpus all
     env:
         AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
