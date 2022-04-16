@@ -69,16 +69,16 @@ def report(transactions: pd.DataFrame, params: Dict) -> pd.DataFrame:
     })
 
     # Break down products based on # orders vs total count of orders
-    quantiles, bins = pd.qcut(user_counts, [0, .20, .40, .60, .80, 1], retbins=True)
+    quantiles, bins = pd.qcut(x=user_counts, q=5, retbins=True, duplicates='drop')
 
     batches = []
-    batches.append(bins[1])
-    for i in range(2,len(bins)):
+    batches.append(bins[0])
+    for i in range(1,len(bins)):
         batches.append(bins[i] - bins[i-1])
         
-    labels = ["Bottom 20%", "4th", "3rd", "4th", "Top 20%"]
     fig1, ax1 = plt.subplots(figsize=(10, 8))
-    plt.pie(batches, labels=labels, autopct='%1.1f%%')
+    log.info(batches)
+    plt.pie(batches, autopct='%1.1f%%')
 
     fig1.gca().set_title("Breakdown of customers into 20% blocks by order count")
     wandb.log({"customer_breakdown": wandb.Image(plt)})
@@ -96,16 +96,15 @@ def report(transactions: pd.DataFrame, params: Dict) -> pd.DataFrame:
     wandb.log({"top_10_products_by_orders": product_table})
 
     # Break down products based on # orders vs total count of orders
-    quantiles, bins = pd.qcut(product_counts, [0, .20, .40, .60, .80, 1], retbins=True)
+    quantiles, bins = pd.qcut(x=product_counts, q=5, retbins=True, duplicates='drop')
 
     batches = []
-    batches.append(bins[1])
-    for i in range(2,len(bins)):
+    batches.append(bins[0])
+    for i in range(1,len(bins)):
         batches.append(bins[i] - bins[i-1])
         
-    labels = ["Bottom 20%", "4th", "3rd", "4th", "Top 20%"]
     fig1, ax1 = plt.subplots(figsize=(10, 8))
-    plt.pie(batches, labels=labels, autopct='%1.1f%%')
+    plt.pie(batches, autopct='%1.1f%%')
 
     fig1.gca().set_title("Breakdown of products into 20% blocks by order count")
     wandb.log({"product_breakdown": wandb.Image(plt)})
