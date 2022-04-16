@@ -8,7 +8,8 @@ from .transform import (
     transform_jewelry,
     transform_journey,
     transform_retailrocket,
-    transform_instacart
+    transform_instacart,
+    transform_bakery
 )
 
 from .cleaning import clean_data
@@ -108,6 +109,18 @@ def create_instacart_pipeline(**kwargs):
                 transform_instacart,
                 ["instacart_kaggle_order_data", "instacart_kaggle_product_data"],
                 ["transactions", "products"],
+                name="transform_instacart"
+            )
+        ]
+    )
+
+def create_bakery_pipeline(**kwargs):
+    return Pipeline(
+        [
+            node(
+                transform_bakery,
+                "bakery_kaggle_order_data",
+                "transactions",
                 name="transform_instacart"
             )
         ]

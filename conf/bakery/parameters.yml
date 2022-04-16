@@ -1,0 +1,28 @@
+# random seed to use for all algorithms
+seed: 42
+
+# alpha value to multiply the csr_matrix by before training the ALS
+alpha: 3
+
+# number of latent factors to calculate for each order
+factors: 64
+
+# regularization to pass to the ALS algorithm
+regularization: 0.02
+
+# number of iterations to run the ALS algorithm
+iterations: 200
+
+# Test train split
+test_size: 0.1
+
+# number of orders that a product must appear in to be considered relevant
+filter_value: 10
+
+# minimum size of an order (needs to be at least 2)
+minimum_order_size: 2
+
+# maximum order size
+maximum_order_size: 2000
+
+wandb_project: bakery
