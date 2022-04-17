@@ -62,6 +62,9 @@ jobs:
       
     - name: journey
       run: kedro run --env journey --pipeline journey
+
+    - name: bakery
+      run: kedro run --env bakery --pipeline bakery
 #
 #        // Too sparse and takes a very long time
 #        kedro run --env electronics --pipeline electronics
