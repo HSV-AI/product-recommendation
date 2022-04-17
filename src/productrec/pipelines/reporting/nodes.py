@@ -119,7 +119,7 @@ def report(transactions: pd.DataFrame, params: Dict) -> pd.DataFrame:
         oht_ary = te.fit(temp).transform(temp, sparse=True)
         sparse_df = pd.DataFrame.sparse.from_spmatrix(oht_ary, columns=te.columns_)
         sparse_df.columns = [str(i) for i in sparse_df.columns]
-        top_sets = apriori(sparse_df, min_support=0.1, use_colnames=True, verbose=1, max_len=5)
+        top_sets = apriori(sparse_df, min_support=0.02, use_colnames=True, verbose=1, max_len=5)
         top_sets['length'] = top_sets['itemsets'].apply(lambda x: len(x))
 
         set1 = top_sets[top_sets['length'] == 1].sort_values('support', ascending=False).reset_index()[:5][['support','itemsets']]

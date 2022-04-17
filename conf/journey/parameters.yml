@@ -5,7 +5,7 @@ seed: 42
 alpha: 1
 
 # number of latent factors to calculate for each order
-factors: 128
+factors: 512
 
 # regularization to pass to the ALS algorithm
 regularization: 0.02
@@ -14,10 +14,10 @@ regularization: 0.02
 iterations: 200
 
 # Test train split
-test_size: 0.1
+test_size: 0.01
 
 # number of orders that a product must appear in to be considered relevant
-filter_value: 100
+filter_value: 1000
 
 # minimum size of an order (needs to be at least 2)
 minimum_order_size: 2

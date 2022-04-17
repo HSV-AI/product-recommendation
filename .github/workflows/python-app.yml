@@ -10,27 +10,61 @@ on:
     branches: [ dev ]
 
 jobs:
+
+  deploy-runner:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: iterative/setup-cml@v1
+      - uses: actions/checkout@v2
+      - name: Deploy runner on EC2
+        env:
+          REPO_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          cml-runner \
+              --cloud=aws \
+              --cloud-region=us-east-1 \
+              --cloud-type=m4.2xlarge \
+              --labels=cml-cpu
+
   build:
 
-    runs-on: ubuntu-latest
-    container: 
-      image: hsvai/product-rec:train
-
-    steps:
-    - name: Checkout Code
-      uses: actions/checkout@v2
-    - name: Run Pipelines
-      env:
+    needs: deploy-runner
+    runs-on: [self-hosted, cml-cpu]
+    timeout-minutes: 4320 # 72h
+    container:
+      image: hsvai/product-rec:train-cpu
+      # options: --gpus all
+    env:
         AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
         AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
         WANDB_API_KEY: ${{secrets.WANDB_API_KEY}}
-      run: |
-        kedro run --env vipin20 --pipeline vipin20
-        kedro run --env brazilian --pipeline brazilian
-        kedro run --env ecommerce --pipeline ecommerce
-        kedro run --env jewelry --pipeline jewelry
-        kedro run --env retailrocket --pipeline retailrocket
-        kedro run --env journey --pipeline journey
+        REPO_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+      
+    - name: vipin20  
+      run: kedro run --env vipin20 --pipeline vipin20
+      
+    - name: brazilian
+      run: kedro run --env brazilian --pipeline brazilian
+      
+    - name: ecommerce
+      run: kedro run --env ecommerce --pipeline ecommerce
+      
+    - name: jewelry
+      run: kedro run --env jewelry --pipeline jewelry
+      
+    - name: retailrocket
+      run: kedro run --env retailrocket --pipeline retailrocket
+      
+    - name: journey
+      run: kedro run --env journey --pipeline journey
+
+    - name: bakery
+      run: kedro run --env bakery --pipeline bakery
 #
 #        // Too sparse and takes a very long time
 #        kedro run --env electronics --pipeline electronics

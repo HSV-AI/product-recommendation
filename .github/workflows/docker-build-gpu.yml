@@ -1,0 +1,55 @@
+# This workflow will install Python dependencies, run tests and lint with a single version of Python
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: Docker GPU Pipeline
+
+on:
+  push:
+    paths:
+      - '.github/workflows/docker-build-gpu.yml'
+      - '*Dockerfile'
+      - 'src/requirements.txt'
+
+jobs:
+
+  deploy-runner:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: iterative/setup-cml@v1
+      - uses: actions/checkout@v2
+      - name: Deploy runner on EC2
+        env:
+          REPO_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          cml-runner \
+              --cloud=aws \
+              --cloud-region=us-east-1 \
+              --cloud-type=p2.xlarge \
+              --labels=cml-gpu
+
+  build:
+    needs: deploy-runner
+    runs-on: [self-hosted, cml-gpu]
+    timeout-minutes: 4320 # 72h
+    container:
+      image: docker://iterativeai/cml:0-dvc2-base1-gpu
+      options: --gpus all
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Login to DockerHub
+        uses: docker/login-action@v1 
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push CI/CD Image
+        id: docker_build
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: Dockerfile
+          push: true
+          tags: hsvai/product-rec:train-gpu
