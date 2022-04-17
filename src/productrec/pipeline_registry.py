@@ -21,6 +21,7 @@ def register_pipelines() -> Dict[str, Pipeline]:
     journey_pipelie = pipes.create_journey_pipeline() + implicit_pipeline
     retailrocket_pipeline = pipes.create_retailrocket_pipeline() + implicit_pipeline
     instacart_pipeline = pipes.create_instacart_pipeline() + implicit_pipeline
+    bakery_pipeline = pipes.create_bakery_pipeline() + implicit_pipeline
 
     return {
         "vipin20": vipin20_pipeline,
@@ -31,6 +32,7 @@ def register_pipelines() -> Dict[str, Pipeline]:
         "journey": journey_pipelie,
         "retailrocket": retailrocket_pipeline,
         "instacart": instacart_pipeline,
+        "bakery": bakery_pipeline,
         "implicit": implicit_pipeline,
         "__default__": vipin20_pipeline
     }
