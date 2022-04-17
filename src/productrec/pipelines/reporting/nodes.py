@@ -68,26 +68,19 @@ def report(transactions: pd.DataFrame, params: Dict) -> pd.DataFrame:
         "products_by_orders_plot": plt
     })
 
-    # Break down users based on # orders vs total count of orders
-    temp = (100. * user_counts / user_counts.sum()).sort_values(ascending=False)
+    # Break down products based on # orders vs total count of orders
+    quantiles, bins = pd.qcut(x=user_counts, q=5, retbins=True, duplicates='drop')
 
-    count = 0
-    total = 0
-    buckets=[]
-    for val in temp:
+    batches = []
+    batches.append(bins[0])
+    for i in range(1,len(bins)):
+        batches.append(bins[i] - bins[i-1])
         
-        if total + val > 25:
-            buckets.append(count)
-            total = 0
-            count = 0
-            
-        count+=1
-        total+=val
-
-    labels = ['Top 25%', '2nd 25%', '3rd 25%', '4th 25%']
     fig1, ax1 = plt.subplots(figsize=(10, 8))
-    plt.pie(buckets, labels=labels, autopct=lambda p: '{:.0f}'.format(p * len(temp) / 100))
-    fig1.gca().set_title("Breakdown of customers by order count")
+    log.info(batches)
+    plt.pie(batches, autopct='%1.1f%%')
+
+    fig1.gca().set_title("Breakdown of customers into 20% blocks by order count")
     wandb.log({"customer_breakdown": wandb.Image(plt)})
 
     product_counts = transactions \
@@ -103,25 +96,17 @@ def report(transactions: pd.DataFrame, params: Dict) -> pd.DataFrame:
     wandb.log({"top_10_products_by_orders": product_table})
 
     # Break down products based on # orders vs total count of orders
-    temp = (100. * product_counts / product_counts.sum()).sort_values(ascending=False)
+    quantiles, bins = pd.qcut(x=product_counts, q=5, retbins=True, duplicates='drop')
 
-    count = 0
-    total = 0
-    buckets=[]
-    for val in temp:
+    batches = []
+    batches.append(bins[0])
+    for i in range(1,len(bins)):
+        batches.append(bins[i] - bins[i-1])
         
-        if total + val > 25:
-            buckets.append(count)
-            total = 0
-            count = 0
-            
-        count+=1
-        total+=val
-
-    labels = ['Top 25%', '2nd 25%', '3rd 25%', '4th 25%']
     fig1, ax1 = plt.subplots(figsize=(10, 8))
-    plt.pie(buckets, labels=labels, autopct=lambda p: '{:.0f}'.format(p * len(temp) / 100))
-    fig1.gca().set_title("Breakdown of products by order count")
+    plt.pie(batches, autopct='%1.1f%%')
+
+    fig1.gca().set_title("Breakdown of products into 20% blocks by order count")
     wandb.log({"product_breakdown": wandb.Image(plt)})
 
     # Now for some mlxtend action

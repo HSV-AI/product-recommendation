@@ -1,0 +1,7 @@
+###
+# bakery dataset
+###
+bakery_kaggle_order_data:
+  type: pandas.CSVDataSet
+  filepath: data/01_raw/bakery/BreadBasket_DMS.csv
+

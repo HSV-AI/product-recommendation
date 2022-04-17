@@ -7,5 +7,6 @@ from .pipeline import  (
     create_journey_pipeline,
     create_retailrocket_pipeline,
     create_vipin20_pipeline,
-    create_implicit_pipeline
+    create_implicit_pipeline,
+    create_bakery_pipeline
 )

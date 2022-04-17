@@ -6,3 +6,4 @@ from .jewelry import transform_jewelry
 from .journey import transform_journey
 from .retailrocket import transform_retailrocket
 from .instacart import transform_instacart
+from .bakery import transform_bakery
